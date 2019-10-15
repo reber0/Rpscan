@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-23 09:52:13
-@LastEditTime: 2019-10-15 16:00:06
+@LastEditTime: 2019-10-18 14:49:36
 '''
 
 import sys
@@ -57,8 +57,8 @@ if __name__ == "__main__":
                         help="Target file name")
     parser.add_argument("-t", dest="thread", type=int, default=30, 
                         help="The number of threads, default is 30 threads")
-    parser.add_argument("-r", dest="rate", type=int, default=2000, 
-                        help="Port scan rate, default is 2000")
+    parser.add_argument("-r", dest="rate", type=int, default=1000, 
+                        help="Port scan rate, default is 1000")
     parser.add_argument("-st", dest="scantype", type=str, default="masscan", 
                         choices=["tcp","masscan"], help="Port scan type, default is masscan")
     parser.add_argument("-a", dest="is_all_ports", default=False, 
