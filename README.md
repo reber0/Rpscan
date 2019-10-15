@@ -11,7 +11,7 @@
 ### 安装必要模块
 * 安装 nmap [(Download)](https://nmap.org/dist/?C=M&O=D)
 * 安装 winpcap [(Download)](https://www.winpcap.org/install/default.htm)
-* pip3 install -r requirements
+* pip3 install -r requirements.txt
 
 ### 参数
 ```
