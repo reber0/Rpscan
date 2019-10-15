@@ -1,0 +1,3 @@
+python-nmap
+colorlog
+IPy

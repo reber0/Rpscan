@@ -3,14 +3,15 @@
 ### 功能流程
 * 解析目标 ip
 * 识别存活主机
-  * 多线程识别存活主机
 * 端口扫描
   * async tcp 扫描存活主机端口
   * masscan 扫描存活主机端口
 * 服务识别
 
 ### 安装必要模块
-pip3 install -r requirements
+* 安装 nmap [(Download)](https://nmap.org/dist/?C=M&O=D)
+* 安装 winpcap [(Download)](https://www.winpcap.org/install/default.htm)
+* pip3 install -r requirements
 
 ### 参数
 ```
@@ -24,9 +25,9 @@ optional arguments:
   -st {tcp,masscan}    Port scan type, default is masscan
   -t THREAD            The number of threads, default is 30 threads
   -r RATE              Port scan rate, default is 2000
-  -c                   Check host is alive before port scan, default is True
   -a                   Is full port scanning, default is False
-  -s                   Whether to get port service, default is False
+  -s                   Whether to get port service, default is True
+  -c                   Check host is alive before port scan, default is True
 ```
 
 ### 使用
