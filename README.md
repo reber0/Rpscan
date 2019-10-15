@@ -1,6 +1,6 @@
 # Rpscan
 
-### 功能流程
+### 功能
 * 解析目标 ip
 * 识别存活主机
 * 端口扫描
@@ -43,7 +43,3 @@ optional arguments:
 [16:15:45] [INFO] 59.108.35.198    22     open      ssh             OpenSSH                       6.6.1p1 Ubuntu 2ubuntu2.11
 [16:15:45] [INFO] 59.108.35.198    80     open      http            Apache httpd                  2.4.7
 ```
-
-
-
-
