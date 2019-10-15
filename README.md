@@ -43,7 +43,3 @@ optional arguments:
 [16:15:45] [INFO] 59.108.35.198    22     open      ssh             OpenSSH                       6.6.1p1 Ubuntu 2ubuntu2.11
 [16:15:45] [INFO] 59.108.35.198    80     open      http            Apache httpd                  2.4.7
 ```
-
-
-
-
