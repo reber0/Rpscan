@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime: 2019-09-19 19:27:29
+@LastEditTime: 2019-11-21 13:21:47
 '''
 
 import re
@@ -15,7 +15,7 @@ def parse_target(target):
     # 10.17.1.1/24  10.17.2.30-55  10.111.22.12
     ip_list = list()
     #校验target格式是否正确
-    m1 = re.match(r'\d{1,3}(\.\d{1,3}){3}/\d{1,2}$', target)
+    m1 = re.match(r'\d{1,3}(\.\d{1,3}){3}/(1[6789]|2[012346789]|30)$', target)
     m2 = re.match(r'\d{1,3}(\.\d{1,3}){3}-\d{1,3}$', target)
     m3 = re.match(r'\d{1,3}(\.\d{1,3}){3}$', target)
     if m1:
