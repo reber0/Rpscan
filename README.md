@@ -24,7 +24,7 @@ optional arguments:
   -iL TARGET_FILENAME  Target file name
   -st {tcp,masscan}    Port scan type, default is masscan
   -t THREAD            The number of threads, default is 30 threads
-  -r RATE              Port scan rate, default is 2000
+  -r RATE              Port scan rate, default is 1000
   -a                   Is full port scanning, default is False
   -s                   Whether to get port service, default is True
   -c                   Check host is alive before port scan, default is True
@@ -37,9 +37,9 @@ optional arguments:
 [16:15:34] [INFO] all host: 1, live host: 1
 [16:15:34] [INFO] [*] PortScan...
 [16:15:34] [INFO] start async tcp port scan...
-[16:15:34] [INFO] 59.108.35.198    22     open
-[16:15:34] [INFO] 59.108.35.198    80     open
+[16:15:34] [INFO] 59.108.35.198    22    open
+[16:15:34] [INFO] 59.108.35.198    80    open
 [16:15:39] [INFO] [*] Get the service of the port...
-[16:15:45] [INFO] 59.108.35.198    22     open      ssh      OpenSSH          6.6.1p1 Ubuntu2ubuntu2.11
-[16:15:45] [INFO] 59.108.35.198    80     open      http     Apache httpd     2.4.7
+[16:15:45] [INFO] 59.108.35.198    22    open    ssh     OpenSSH         6.6.1p1 Ubuntu2ubuntu2.11
+[16:15:45] [INFO] 59.108.35.198    80    open    http    Apache httpd    2.4.7
 ```
