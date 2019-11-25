@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime: 2019-10-15 16:00:22
+@LastEditTime: 2019-11-21 13:33:19
 '''
 
 import os
@@ -13,7 +13,9 @@ import time
 import nmap
 
 from libs.mylog import MyLog
-logger = MyLog(logfile='log/port_scan.log', loglevel='INFO', logger_name='check live host')
+
+logfile = "log/"+str(time.strftime("%Y-%m-%d", time.localtime()))+".log"
+logger = MyLog(logfile=logfile, loglevel='INFO', logger_name='check live host')
 
 class CheckHostLive(object):
     """获取存活主机列表"""
