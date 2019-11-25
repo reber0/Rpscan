@@ -4,16 +4,19 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime: 2019-08-24 18:57:54
+@LastEditTime: 2019-11-21 13:34:00
 '''
 
+import time
 from nmap import nmap
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 lock = Lock()
 
 from libs.mylog import MyLog
-logger = MyLog(logfile='log/port_scan.log', loglevel='INFO', logger_name='get service')
+
+logfile = "log/"+str(time.strftime("%Y-%m-%d", time.localtime()))+".log"
+logger = MyLog(logfile=logfile, loglevel='INFO', logger_name='get service')
 
 class NmapGetPortService(object):
     """获取端口运行的服务"""

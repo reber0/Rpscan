@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:54:23
-@LastEditTime: 2019-10-16 09:25:09
+@LastEditTime: 2019-11-21 13:33:53
 '''
 
 import os
@@ -14,7 +14,9 @@ import asyncio
 from subprocess import Popen, PIPE, STDOUT
 
 from libs.mylog import MyLog
-logger = MyLog(logfile='log/port_scan.log', loglevel='INFO', logger_name='port scan')
+
+logfile = "log/"+str(time.strftime("%Y-%m-%d", time.localtime()))+".log"
+logger = MyLog(logfile=logfile, loglevel='INFO', logger_name='port scan')
 
 class PortScan(object):
     """端口扫描"""
