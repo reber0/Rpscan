@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-23 09:52:13
-@LastEditTime: 2019-10-18 14:49:36
+@LastEditTime: 2019-12-13 10:39:40
 '''
 
 import sys
@@ -13,16 +13,15 @@ sys.dont_write_bytecode = True  # 不生成pyc文件
 from libs.check_host_live import CheckHostLive
 from libs.port_scan import PortScan
 from libs.get_service import NmapGetPortService
-
+from libs.util import ParseTarget
 
 def main(args):
+    pt = ParseTarget()
     if args.target:
-        from libs.util import parse_target
-        ip_list = parse_target(args.target)
+        ip_list = pt.parse_target(args.target)
     elif args.target_filename:
-        from libs.util import parse_target_list
         target_list = [line.strip() for line in open(args.target_filename).readlines()]
-        ip_list = parse_target_list(target_list)
+        ip_list = pt.parse_target(target_list)
 
     if args.checklive:
         chl = CheckHostLive(ip_list=ip_list)
