@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime: 2019-11-21 13:34:00
+@LastEditTime: 2019-12-03 14:08:43
 '''
 
 import time
@@ -49,7 +49,7 @@ class NmapGetPortService(object):
                 product = port_result[port]['product']
                 version = port_result[port]['version']
 
-                result = "{:<17}{:<7}{:<10}{:<16}{:<30}{}".format(ip,port,state,name,product,version)
+                result = "{:<17}{:<7}{:<10}{:<16}{:<32}{}".format(ip,port,state,name,product,version)
                 lock.acquire()
                 logger.info(result)
                 lock.release()
