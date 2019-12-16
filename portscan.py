@@ -56,16 +56,16 @@ if __name__ == "__main__":
                         help="Target file name")
     parser.add_argument("-st", dest="scantype", type=str, default="masscan", 
                         choices=["tcp","masscan"], help="Port scan type, default is masscan")
+    parser.add_argument("-t", dest="thread", type=int, default=30, 
+                        help="The number of threads, default is 30 threads")
+    parser.add_argument("-r", dest="rate", type=int, default=1000, 
+                        help="Port scan rate, default is 1000")
     parser.add_argument("-c", dest="checklive", default=False, 
                         action="store_false", help="Check host is alive before port scan, default is False")
     parser.add_argument("-a", dest="is_all_ports", default=False, 
                         action="store_true", help="Is full port scanning, default is False")
     parser.add_argument("-s", dest="service", default=True, 
                         action="store_false", help="Whether to get port service, default is False")
-    parser.add_argument("-t", dest="thread", type=int, default=30, 
-                        help="The number of threads, default is 30 threads")
-    parser.add_argument("-r", dest="rate", type=int, default=1000, 
-                        help="Port scan rate, default is 1000")
 
     args = parser.parse_args()
 
