@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime: 2019-11-21 13:33:19
+@LastEditTime: 2019-12-16 22:47:19
 '''
 
 import os
@@ -32,10 +32,9 @@ class CheckHostLive(object):
         timestamp = str(time.time())
         if sys.platform.startswith('win'):
             self.target_file = "log\\\\tmp_{}.log".format(timestamp)
-            self.command = "-v -sn -PS -n --min-hostgroup 50 --min-parallelism 100 -iL {}".format(self.target_file)
         else:
             self.target_file = "/tmp/tmp_{}.log".format(timestamp)
-            self.command = "-v -sn -PS -n --min-hostgroup 500 --min-parallelism 1000 -iL {}".format(self.target_file)
+        self.command = "-v -sn -PS -n --min-hostgroup 500 --min-parallelism 1000 -iL {}".format(self.target_file)
 
         with open(self.target_file,"w") as f:
             f.write("\n".join(self.ip_list))
