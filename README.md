@@ -15,24 +15,24 @@
 
 ### 参数
 ```
-usage: portscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-st {tcp,masscan}]
-                   [-t THREAD] [-r RATE] [-c] [-a] [-s]
+usage: portscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-t THREAD]
+                   [-r RATE] [-st {tcp,masscan}] [-s] [-a] [-c]
 
 optional arguments:
   -h, --help           show this help message and exit
   -i TARGET            Target(1.1.1.1 or 1.1.1.1/24 or 1.1.1.1-4)
   -iL TARGET_FILENAME  Target file name
-  -st {tcp,masscan}    Port scan type, default is masscan
   -t THREAD            The number of threads, default is 30 threads
   -r RATE              Port scan rate, default is 1000
-  -a                   Is full port scanning, default is False
+  -st {tcp,masscan}    Port scan type, default is masscan
   -s                   Whether to get port service, default is True
-  -c                   Check host is alive before port scan, default is True
+  -a                   Is full port scanning, default is False
+  -c                   Check host is alive before port scan, default is False
 ```
 
 ### 使用
 ```
-➜  python3 portscan.py -i 59.108.35.198 -st tcp -s
+➜  python3 portscan.py -i 59.108.35.198 -st tcp
 [16:15:34] [INFO] [*] Check Live Host...
 [16:15:34] [INFO] all host: 1, live host: 1
 [16:15:34] [INFO] [*] PortScan...
