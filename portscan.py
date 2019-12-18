@@ -61,11 +61,11 @@ if __name__ == "__main__":
     parser.add_argument("-r", dest="rate", type=int, default=1000, 
                         help="Port scan rate, default is 1000")
     parser.add_argument("-c", dest="checklive", default=False, 
-                        action="store_false", help="Check host is alive before port scan, default is False")
+                        action="store_true", help="Check host is alive before port scan, default is False")
     parser.add_argument("-a", dest="is_all_ports", default=False, 
                         action="store_true", help="Is full port scanning, default is False")
     parser.add_argument("-s", dest="service", default=False, 
-                        action="store_false", help="Whether to get port service, default is False")
+                        action="store_true", help="Whether to get port service, default is False")
 
     args = parser.parse_args()
 
