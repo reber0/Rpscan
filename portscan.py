@@ -64,7 +64,7 @@ if __name__ == "__main__":
                         action="store_false", help="Check host is alive before port scan, default is False")
     parser.add_argument("-a", dest="is_all_ports", default=False, 
                         action="store_true", help="Is full port scanning, default is False")
-    parser.add_argument("-s", dest="service", default=True, 
+    parser.add_argument("-s", dest="service", default=False, 
                         action="store_false", help="Whether to get port service, default is False")
 
     args = parser.parse_args()
