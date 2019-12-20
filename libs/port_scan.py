@@ -56,7 +56,7 @@ class PortScan(object):
 
     def async_tcp_port_scan(self):
         logger.info("start async tcp port scan...")
-        ports = [port for port in range(11,65535)] if self.all_ports else self.common_port.split(',')
+        ports = [port for port in range(20,65535)] if self.all_ports else self.common_port.split(',')
         ip_port_list = [(ip,int(port)) for port in ports for ip in self.ip_list]
 
         if platform.system()=='Windows':
