@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-23 09:52:13
-@LastEditTime: 2019-12-13 10:39:40
+@LastEditTime: 2019-12-23 20:12:52
 '''
 
 import sys
@@ -13,7 +13,7 @@ sys.dont_write_bytecode = True  # 不生成pyc文件
 from libs.check_host_live import CheckHostLive
 from libs.port_scan import PortScan
 from libs.get_service import NmapGetPortService
-from libs.util import ParseTarget
+from libs.parse import ParseTarget
 
 def main(args):
     pt = ParseTarget()
