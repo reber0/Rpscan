@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:54:23
-@LastEditTime: 2019-12-25 18:16:26
+@LastEditTime: 2019-12-25 18:25:58
 '''
 
 import os
@@ -79,7 +79,7 @@ class PortScan(object):
 
     def masscan_scan(self):
         logger.info("start masscan port scan...")
-        ports = "11-65535" if self.all_ports else ",".join(self.ports)
+        ports = "11-65535" if self.all_ports else ",".join(map(str,self.ports))
         timestamp = str(time.time())
         target_file = "log/target_{}.log".format(timestamp)
         result_file = "log/result_{}.log".format(timestamp)
