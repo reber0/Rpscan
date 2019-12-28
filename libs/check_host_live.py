@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime: 2019-12-16 22:47:19
+@LastEditTime: 2019-12-28 18:46:00
 '''
 
 import os
@@ -13,9 +13,11 @@ import time
 import nmap
 
 from libs.mylog import MyLog
+from config import log_file_path
+from config import log_level
+log_file = log_file_path.joinpath("{}.log".format(time.strftime("%Y-%m-%d", time.localtime())))
+logger = MyLog(loglevel=log_level, logger_name='check live host', logfile=log_file)
 
-logfile = "log/"+str(time.strftime("%Y-%m-%d", time.localtime()))+".log"
-logger = MyLog(logfile=logfile, loglevel='INFO', logger_name='check live host')
 
 class CheckHostLive(object):
     """获取存活主机列表"""
@@ -30,11 +32,10 @@ class CheckHostLive(object):
 
     def init(self):
         timestamp = str(time.time())
-        if sys.platform.startswith('win'):
-            self.target_file = "log\\\\tmp_{}.log".format(timestamp)
-        else:
-            self.target_file = "/tmp/tmp_{}.log".format(timestamp)
-        self.command = "-v -sn -PS -n --min-hostgroup 500 --min-parallelism 1000 -iL {}".format(self.target_file)
+        self.target_file = log_file_path.joinpath("tmp_{}.log".format(timestamp))
+
+        command = "-v -sn -PS -n --min-hostgroup 500 --min-parallelism 1024 -iL {}"
+        self.command = command.format(self.target_file)
 
         with open(self.target_file,"w") as f:
             f.write("\n".join(self.ip_list))
@@ -55,6 +56,7 @@ class CheckHostLive(object):
         finally:
             if os.path.exists(self.target_file):
                 os.remove(self.target_file)
-        logger.info("all host: {}, live host: {}".format(len(self.ip_list),len(self.live_host)))
+        logger.info("all host: {}, live host: {}".format(
+            len(self.ip_list),len(self.live_host)))
         return self.live_host
 
