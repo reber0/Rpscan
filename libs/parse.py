@@ -4,12 +4,57 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime: 2019-12-13 10:38:28
+@LastEditTime: 2019-12-28 17:29:46
 '''
 
 import re
 import socket
 from IPy import IP
+
+import argparse
+
+class Parser(object):
+    """Parser"""
+    def __init__(self):
+        super(Parser, self).__init__()
+        self.example = """Examples:
+                          \r  python3 {shell_name} -i 192.168.1.1/24 -c -s
+                          \r  python3 {shell_name} -iL target.txt -st masscan -r 3000 -c -a -s
+                          """
+
+    def parser(self):
+        parser = argparse.ArgumentParser(
+            formatter_class=argparse.RawDescriptionHelpFormatter,#使 example 可以换行
+            add_help=True,
+            # description = "端口扫描",
+            )
+        parser.epilog = self.example.format(shell_name=parser.prog)
+        parser.add_argument("-i", dest="target", type=str, 
+                            help="Target(1.1.1.1 or 1.1.1.1/24 or 1.1.1.1-4)")
+        parser.add_argument("-iL", dest="target_filename", type=str, 
+                            help="Target file name")
+        parser.add_argument("-st", dest="scantype", type=str, default="masscan", 
+                            choices=["tcp","masscan"], help="Port scan type, default is masscan")
+        parser.add_argument("-t", dest="thread", type=int, default=30, 
+                            help="The number of threads, default is 30 threads")
+        parser.add_argument("-r", dest="rate", type=int, default=1000, 
+                            help="Port scan rate, default is 1000")
+        parser.add_argument("-c", dest="checklive", default=False, 
+                            action="store_true", help="Check host is alive before port scan, default is False")
+        parser.add_argument("-a", dest="is_all_ports", default=False, 
+                            action="store_true", help="Is full port scanning, default is False")
+        parser.add_argument("-s", dest="service", default=False, 
+                            action="store_true", help="Whether to get port service, default is False")
+        # args = parser.parse_args()
+        # parser.print_help()
+
+        return parser
+
+    @staticmethod
+    def init():
+        parser = Parser().parser()
+        args = parser.parse_args()
+        return args.__dict__
 
 class ParseTarget(object):
     """ParseTarget"""

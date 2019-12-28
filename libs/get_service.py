@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime: 2019-12-03 14:08:43
+@LastEditTime: 2019-12-28 19:07:21
 '''
 
 import time
@@ -14,9 +14,11 @@ from threading import Lock
 lock = Lock()
 
 from libs.mylog import MyLog
+from config import log_file_path
+from config import log_level
+log_file = log_file_path.joinpath("{}.log".format(time.strftime("%Y-%m-%d", time.localtime())))
+logger = MyLog(loglevel=log_level, logger_name='get service', logfile=log_file)
 
-logfile = "log/"+str(time.strftime("%Y-%m-%d", time.localtime()))+".log"
-logger = MyLog(logfile=logfile, loglevel='INFO', logger_name='get service')
 
 class NmapGetPortService(object):
     """获取端口运行的服务"""
