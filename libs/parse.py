@@ -4,12 +4,17 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime: 2019-12-28 17:29:46
+@LastEditTime: 2019-12-31 13:04:07
 '''
 
 import re
 import socket
 from IPy import IP
+
+from libs.util import file_is_exist
+from libs.mylog import MyLog
+from config import log_level
+logger = MyLog(loglevel=log_level, logger_name="check parames")
 
 import argparse
 
@@ -17,18 +22,21 @@ class Parser(object):
     """Parser"""
     def __init__(self):
         super(Parser, self).__init__()
-        self.example = """Examples:
+        self.parser = self.parser()
+        self.args = self.parser.parse_args().__dict__
+
+    def parser(self):
+        example = """Examples:
                           \r  python3 {shell_name} -i 192.168.1.1/24 -c -s
                           \r  python3 {shell_name} -iL target.txt -st masscan -r 3000 -c -a -s
                           """
 
-    def parser(self):
         parser = argparse.ArgumentParser(
             formatter_class=argparse.RawDescriptionHelpFormatter,#使 example 可以换行
             add_help=True,
             # description = "端口扫描",
             )
-        parser.epilog = self.example.format(shell_name=parser.prog)
+        parser.epilog = example.format(shell_name=parser.prog)
         parser.add_argument("-i", dest="target", type=str, 
                             help="Target(1.1.1.1 or 1.1.1.1/24 or 1.1.1.1-4)")
         parser.add_argument("-iL", dest="target_filename", type=str, 
@@ -52,9 +60,36 @@ class Parser(object):
 
     @staticmethod
     def init():
-        parser = Parser().parser()
-        args = parser.parse_args()
-        return args.__dict__
+        parser = Parser()
+        if parser.parames_is_right():
+            return parser.args
+        else:
+            exit()
+
+    def parames_is_right(self):
+        """
+        检测给的参数是否正常、检查目标文件或字典是否存在
+        """
+
+        self.host           = self.args.get("target")
+        self.host_file      = self.args.get("target_filename")
+
+        if not (self.host or self.host_file):
+            self.parser.print_help()
+            logger.error("The arguments -i or -iL is required, please provide target !")
+            exit(0)
+
+        if self.host_file:
+            return self.check_file_exist(self.host_file)
+
+        return True
+
+    def check_file_exist(self, file_name):
+        if not file_is_exist(file_name):
+            logger.error("No such file or directory \"{}\"".format(file_name))
+            return False
+        else:
+            return True
 
 class ParseTarget(object):
     """ParseTarget"""
