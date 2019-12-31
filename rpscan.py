@@ -4,12 +4,13 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-23 09:52:13
-@LastEditTime: 2019-12-28 19:51:34
+@LastEditTime: 2019-12-31 13:07:33
 '''
 
 import sys
 sys.dont_write_bytecode = True  # 不生成pyc文件
 
+from libs.util import get_content
 from libs.parse import Parser
 from libs.parse import ParseTarget
 from libs.check_host_live import CheckHostLive
@@ -25,7 +26,7 @@ def main():
     if args.get("target"):
         ip_list = pt.parse_target(args.get("target"))
     elif args.get("target_filename"):
-        target_list = [line.strip() for line in open(args.get("target_filename")).readlines()]
+        target_list = get_content(args.get("target_filename"))
         ip_list = pt.parse_target(target_list)
 
     if args.get("checklive"):
