@@ -1,6 +1,12 @@
 # Rportscan
 
+[![platform](https://img.shields.io/static/v1?label=platform&message=macOS&color=172b43)](https://github.com/reber0/Rpscan/tree/master)
+[![python](https://img.shields.io/static/v1?label=python&message=3.7&color=346fb0)](https://www.python.org/)
+[![nmap](https://img.shields.io/static/v1?label=nmap&message=7.70&color=deecf5)](https://nmap.org/)
+[![masscan](https://img.shields.io/static/v1?label=masscan&message=1.0.5&color=deecf5)](https://github.com/robertdavidgraham/masscan)
+
 ### 功能
+
 * 解析目标 ip
 
 * 识别存活主机
