@@ -8,7 +8,6 @@
 '''
 
 import pathlib
-from libs.mylog import MyLog
 
 
 root_abspath = pathlib.Path(__file__).parent.resolve()  #绝对路径
