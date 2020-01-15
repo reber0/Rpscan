@@ -28,6 +28,7 @@
 
 ### 参数
 ```
+➜  python3 rpscan.py -h
 usage: rpscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-st {tcp,masscan}]
                  [-t THREAD] [-r RATE] [-c] [-a] [-s]
 
