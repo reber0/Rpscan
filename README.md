@@ -28,8 +28,8 @@
 
 ### 参数
 ```
-usage: portscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-st {tcp,masscan}]
-                   [-t THREAD] [-r RATE] [-c] [-a] [-s]
+usage: rpscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-st {tcp,masscan}]
+                 [-t THREAD] [-r RATE] [-c] [-a] [-s]
 
 optional arguments:
   -h, --help           show this help message and exit
@@ -41,11 +41,15 @@ optional arguments:
   -c                   Check host is alive before port scan, default is False
   -a                   Is full port scanning, default is False
   -s                   Whether to get port service, default is False
+
+Examples:
+  python3 rpscan.py -i 192.168.1.1/24 -c -s
+  python3 rpscan.py -iL target.txt -st masscan -r 3000 -c -a -s
 ```
 
 ### 使用
 ```
-➜  python3 portscan.py -i 59.108.35.198 -st tcp -c -s
+➜  python3 rpscan.py -i 59.108.35.198 -st tcp -c -s
 [16:15:34] [INFO] [*] Check Live Host...
 [16:15:34] [INFO] all host: 1, live host: 1
 [16:15:34] [INFO] [*] PortScan...
