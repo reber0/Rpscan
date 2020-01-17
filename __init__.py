@@ -4,8 +4,14 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-28 17:01:44
-@LastEditTime: 2019-12-28 19:51:00
+@LastEditTime: 2020-01-18 02:39:08
 '''
+import sys
+sys.dont_write_bytecode = True  # 不生成pyc文件
+from .libs.get_service import NmapGetPortService
+from .libs.port_scan import PortScan
+from .libs.check_host_live import CheckHostLive
+
 
 """
 usage:
@@ -38,11 +44,3 @@ usage:
                         'state': 'open',
                         'version': ''}]}
 """
-
-import sys
-sys.dont_write_bytecode = True  # 不生成pyc文件
-
-from .libs.check_host_live import CheckHostLive
-from .libs.port_scan import PortScan
-from .libs.get_service import NmapGetPortService
-
