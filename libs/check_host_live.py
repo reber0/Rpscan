@@ -49,7 +49,7 @@ class CheckHostLive(object):
         '''检测存活主机'''
         try:
             nm_scan = nmap.PortScanner()
-            nm_scan.scan(self.command, arguments="")
+            nm_scan.scan(self.command.replace("\\","/"), arguments="")
             # print(nm_scan.command_line())
             for host in nm_scan.all_hosts():
                 if nm_scan[host]["status"]["state"] == "up":
