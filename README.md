@@ -50,16 +50,16 @@ Examples:
 
 ### 使用
 ```
-➜  python3 rpscan.py -i 59.108.35.198 -st tcp -c -s
+➜  python3 rpscan.py -i 59.108.123.123 -st tcp -c -s
 [16:15:34] [INFO] [*] Check Live Host...
 [16:15:34] [INFO] all host: 1, live host: 1
 [16:15:34] [INFO] [*] PortScan...
 [16:15:34] [INFO] start async tcp port scan...
-[16:15:34] [INFO] 59.108.35.198    22    open
-[16:15:34] [INFO] 59.108.35.198    80    open
+[16:15:34] [INFO] 59.108.123.123    22    open
+[16:15:34] [INFO] 59.108.123.123    80    open
 [16:15:39] [INFO] [*] Get the service of the port...
-[16:15:45] [INFO] 59.108.35.198    22    open    ssh     OpenSSH         6.6.1p1 Ubuntu2ubuntu2.11
-[16:15:45] [INFO] 59.108.35.198    80    open    http    Apache httpd    2.4.7
+[16:15:45] [INFO] 59.108.123.123    22    open    ssh     OpenSSH         6.6.1p1 Ubuntu2ubuntu2.11
+[16:15:45] [INFO] 59.108.123.123    80    open    http    Apache httpd    2.4.7
 ```
 
 ### 引用
@@ -68,7 +68,7 @@ import sys
 sys.path.append('/path/to/Rsbrute')
 
 from Rpscan import CheckHostLive
-chl = CheckHostLive(ip_list=["59.108.35.243"])
+chl = CheckHostLive(ip_list=["59.108.123.123"])
 live_host = chl.run()
 print(live_host)
 
@@ -80,7 +80,7 @@ print(port_open_dict)
 
 from pprint import pprint
 from Rpscan import NmapGetPortService
-ngps = NmapGetPortService(ip_port_dict={'59.108.35.243': [80, 22]}, thread_num=10)
+ngps = NmapGetPortService(ip_port_dict={'59.108.123.123': [80, 22]}, thread_num=10)
 port_service_list = ngps.run()
 pprint.pprint(a)
 ```
