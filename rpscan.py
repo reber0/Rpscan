@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-23 09:52:13
-@LastEditTime: 2020-01-18 02:37:12
+@LastEditTime : 2020-01-23 13:52:38
 '''
 import sys
 sys.dont_write_bytecode = True  # 不生成pyc文件
@@ -30,8 +30,8 @@ def main():
     if args.get("checklive"):
         chl = CheckHostLive(ip_list=ip_list)
         live_host = chl.run()
-        print("All Host: {}, Live Host: {}".format(
-            len(ip_list), len(live_host)))
+        # print("All Host: {}, Live Host: {}".format(
+        #     len(ip_list), len(live_host)))
     else:
         live_host = ip_list
 
