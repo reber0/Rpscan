@@ -61,26 +61,3 @@ Examples:
 [16:15:45] [INFO] 59.108.123.123    22    open    ssh     OpenSSH         6.6.1p1 Ubuntu2ubuntu2.11
 [16:15:45] [INFO] 59.108.123.123    80    open    http    Apache httpd    2.4.7
 ```
-
-### 引用
-```
-import sys
-sys.path.append('/path/to/Rsbrute')
-
-from Rpscan import CheckHostLive
-chl = CheckHostLive(ip_list=["59.108.123.123"])
-live_host = chl.run()
-print(live_host)
-
-from Rpscan import PortScan
-ps = PortScan(ip_list=['59.108.35.243'], all_ports=False, rate=2000)
-port_open_dict = ps.masscan_scan()
-port_open_dict = ps.async_tcp_port_scan()
-print(port_open_dict)
-
-from pprint import pprint
-from Rpscan import NmapGetPortService
-ngps = NmapGetPortService(ip_port_dict={'59.108.123.123': [80, 22]}, thread_num=10)
-port_service_list = ngps.run()
-pprint.pprint(a)
-```
