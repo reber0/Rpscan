@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-28 18:16:50
-@LastEditTime: 2019-12-28 18:40:11
+@LastEditTime : 2020-01-23 12:42:39
 '''
 
 import pathlib
@@ -16,6 +16,9 @@ masscan_path = root_abspath.joinpath("masscan")
 
 # log_level = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 log_level = "INFO"
+
+nmap_min_hostgroup = 50
+nmap_min_parallelism = 100
 
 wooyun_top100_web_port = [8080,80,81,8081,7001,8000,8088,8888,9090,8090,88,8001,
     82,9080,8082,8089,9000,8443,9999,8002,89,8083,8200,8008,90,8086,801,8011,8085,

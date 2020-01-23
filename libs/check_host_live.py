@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime: 2020-01-18 02:21:05
+@LastEditTime : 2020-01-23 12:42:05
 '''
 
 import os
@@ -12,6 +12,8 @@ import time
 import nmap
 
 from libs.mylog import MyLog
+from config import nmap_min_hostgroup
+from config import nmap_min_parallelism
 from config import log_file_path
 from config import log_level
 log_file = log_file_path.joinpath("{}.log".format(
@@ -37,8 +39,8 @@ class CheckHostLive(object):
         self.target_file = log_file_path.joinpath(
             "tmp_{}.log".format(timestamp))
 
-        command = "-v -sn -PS -n --min-hostgroup 500 --min-parallelism 1024 -iL {}"
-        self.command = command.format(self.target_file)
+        command = "-v -sn -PS -n --min-hostgroup {} --min-parallelism {} -iL {}"
+        self.command = command.format(nmap_min_hostgroup, nmap_min_parallelism ,self.target_file)
 
         with open(self.target_file, "w") as f_obj:
             f_obj.write("\n".join(self.ip_list))
