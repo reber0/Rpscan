@@ -65,7 +65,7 @@ Examples:
 ### 引用
 ```
 import sys
-sys.path.append('/path/to/Rsbrute')
+sys.path.append('/path/to/Rpscan')
 
 from Rpscan import CheckHostLive
 chl = CheckHostLive(ip_list=["59.108.123.123"])
