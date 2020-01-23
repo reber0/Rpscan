@@ -73,7 +73,7 @@ live_host = chl.run()
 print(live_host)
 
 from Rpscan import PortScan
-ps = PortScan(ip_list=['59.108.35.243'], all_ports=False, rate=2000)
+ps = PortScan(ip_list=['59.108.123.123'], all_ports=False, rate=2000)
 port_open_dict = ps.masscan_scan()
 port_open_dict = ps.async_tcp_port_scan()
 print(port_open_dict)
