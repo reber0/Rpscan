@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime: 2020-01-18 02:31:17
+@LastEditTime : 2020-02-07 14:06:04
 '''
 
 import argparse
@@ -123,7 +123,7 @@ class ParseTarget(object):
         ip_list = list()
         # 校验target格式是否正确
         m1 = re.match(
-            r'\d{1,3}(\.\d{1,3}){3}/(1[6789]|2[012346789]|30)$', target)
+            r'\d{1,3}(\.\d{1,3}){3}/(1[6789]|2[012346789]|3[012])$', target)
         m2 = re.match(r'\d{1,3}(\.\d{1,3}){3}-\d{1,3}$', target)
         m3 = re.match(r'\d{1,3}(\.\d{1,3}){3}$', target)
         if m1:
