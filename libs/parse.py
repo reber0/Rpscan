@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime : 2020-02-07 15:22:11
+@LastEditTime : 2020-02-07 15:25:58
 '''
 
 import argparse
@@ -136,7 +136,7 @@ class ParseTarget(object):
                 ip_list.append(prev+"."+str(start))
         elif m1:
             tmp_ip_list = list()
-            for x in IP(target, make_net=1):
+            for x in IP(target, make_net=True):
                 tmp_ip_list.append(str(x))
             ip_list = tmp_ip_list[1:-1]
         elif m2:
