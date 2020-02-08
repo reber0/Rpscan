@@ -4,6 +4,7 @@
 [![python](https://img.shields.io/static/v1?label=python&message=3.7&color=346fb0)](https://www.python.org/)
 [![nmap](https://img.shields.io/static/v1?label=nmap&message=7.70&color=deecf5)](https://nmap.org/)
 [![masscan](https://img.shields.io/static/v1?label=masscan&message=1.0.5&color=deecf5)](https://github.com/robertdavidgraham/masscan)
+[![winpcap](https://img.shields.io/static/v1?label=winpcap&message=4.1.3&color=deecf5)](https://www.winpcap.org/install/default.htm)
 
 ### 功能
 
