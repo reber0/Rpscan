@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:54:23
-@LastEditTime: 2020-01-18 02:35:17
+@LastEditTime : 2020-02-08 17:39:31
 '''
 import os
 import time
@@ -93,6 +93,9 @@ class PortScan(object):
         timestamp = str(time.time())
         target_file = log_file_path.joinpath("target_{}.log".format(timestamp))
         result_file = log_file_path.joinpath("result_{}.log".format(timestamp))
+        f_obj = open(result_file, "w")
+        f_obj.close()
+
         with open(target_file, "w") as f:
             f.write("\n".join(self.ip_list))
 
