@@ -11,11 +11,20 @@ import os
 import time
 import nmap
 
-from libs.mylog import MyLog
-from config import nmap_min_hostgroup
-from config import nmap_min_parallelism
-from config import log_file_path
-from config import log_level
+try:
+    from libs.mylog import MyLog
+    from config import nmap_min_hostgroup
+    from config import nmap_min_parallelism
+    from config import log_file_path
+    from config import log_level
+except ModuleNotFoundError:
+    from Rpscan.libs.mylog import MyLog
+    from Rpscan.config import nmap_min_hostgroup
+    from Rpscan.config import nmap_min_parallelism
+    from Rpscan.config import log_file_path
+    from Rpscan.config import log_level
+
+
 log_file = log_file_path.joinpath("{}.log".format(
     time.strftime("%Y-%m-%d", time.localtime())))
 logger = MyLog(loglevel=log_level,

@@ -11,9 +11,14 @@ from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 from nmap import nmap
 
-from config import log_level
-from config import log_file_path
-from libs.mylog import MyLog
+try:
+    from config import log_level
+    from config import log_file_path
+    from libs.mylog import MyLog
+except ModuleNotFoundError:
+    from Rpscan.config import log_level
+    from Rpscan.config import log_file_path
+    from Rpscan.libs.mylog import MyLog
 
 lock = Lock()
 log_file = log_file_path.joinpath("{}.log".format(
