@@ -12,9 +12,15 @@ import re
 import socket
 from IPy import IP
 
-from libs.util import file_is_exist
-from libs.mylog import MyLog
-from config import log_level
+try:
+    from libs.util import file_is_exist
+    from libs.mylog import MyLog
+    from config import log_level
+except ModuleNotFoundError:
+    from Rpscan.libs.util import file_is_exist
+    from Rpscan.libs.mylog import MyLog
+    from Rpscan.config import log_level
+
 logger = MyLog(loglevel=log_level, logger_name="check parames")
 
 
