@@ -81,9 +81,9 @@ test.py 内容:
 import sys
 import pathlib
 root_abspath = pathlib.Path(__file__).parent.resolve()
-rpscan_path = root_abspath.joinpath("src")
+module_path = root_abspath.joinpath("src")
 
-sys.path.append(str(rpscan_path))
+sys.path.append(str(module_path))
 
 from Rpscan import CheckHostLive
 chl = CheckHostLive(ip_list=["59.108.123.123"])
