@@ -11,12 +11,21 @@ import time
 import platform
 import asyncio
 from subprocess import Popen, STDOUT
-from config import common_port
-from config import wooyun_top100_web_port
-from config import masscan_path
-from config import log_file_path
-from config import log_level
-from libs.mylog import MyLog
+
+try:
+    from config import common_port
+    from config import wooyun_top100_web_port
+    from config import masscan_path
+    from config import log_file_path
+    from config import log_level
+    from libs.mylog import MyLog
+except ModuleNotFoundError:
+    from Rpscan.config import common_port
+    from Rpscan.config import wooyun_top100_web_port
+    from Rpscan.config import masscan_path
+    from Rpscan.config import log_file_path
+    from Rpscan.config import log_level
+    from Rpscan.libs.mylog import MyLog
 
 log_file = log_file_path.joinpath("{}.log".format(
     time.strftime("%Y-%m-%d", time.localtime())))
