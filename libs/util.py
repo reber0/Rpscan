@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-31 13:03:24
-@LastEditTime: 2020-01-18 02:41:19
+@LastEditTime : 2020-06-08 18:59:55
 '''
 
 import pathlib
@@ -24,3 +24,7 @@ def file_is_exist(filepath):
             return True
         else:
             return False
+
+def is_ip_invalid(ip):
+    func = lambda _ip:all([int(x)<256 for x in _ip.split('.')])
+    return func(ip)
