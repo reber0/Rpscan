@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime : 2020-02-07 15:25:58
+@LastEditTime : 2020-06-08 19:02:28
 '''
 
 import argparse
@@ -115,7 +115,9 @@ class ParseTarget(object):
             ips = self.parse_ip(targets)
             self.ip_list.extend(ips)
 
-        return self.ip_list
+        # ip 排序去重
+        ips = [ip for ip in sorted(set(self.ip_list), key=socket.inet_aton)]
+        return ips
 
     def parse_ip(self, target):
         # 10.17.1.1/24 or 10.17.2.30-55 or 10.111.22.12
@@ -150,8 +152,14 @@ class ParseTarget(object):
             error_msg = "IP {} invalid format".format(target)
             raise Exception(error_msg)
 
-        ips = [ip for ip in sorted(set(ip_list), key=socket.inet_aton)]
-        return ips
+        # 校验 ip 是否正确
+        func = lambda x:all([0<int(y)<256 for y in x.split('.')])
+        for ip in ip_list:
+            if not func(ip):
+                error_msg = "IP {} invalid format".format(target)
+                raise Exception(error_msg)
+
+        return ip_list
 
 
 if __name__ == '__main__':
