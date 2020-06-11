@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime : 2020-06-08 19:02:28
+@LastEditTime : 2020-06-11 10:40:35
 '''
 
 import argparse
@@ -159,7 +159,7 @@ class ParseTarget(object):
             raise Exception(error_msg)
 
         # 校验 ip 是否正确
-        func = lambda x:all([0<int(y)<256 for y in x.split('.')])
+        func = lambda x:all([int(y)<256 for y in x.split('.')])
         for ip in ip_list:
             if not func(ip):
                 error_msg = "IP {} invalid format".format(target)
