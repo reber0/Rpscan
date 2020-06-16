@@ -4,18 +4,30 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-28 18:16:50
-@LastEditTime : 2020-01-23 12:42:39
+@LastEditTime : 2020-06-17 00:53:02
 '''
 
+import time
 import pathlib
+import platform
 
 
 root_abspath = pathlib.Path(__file__).parent.resolve()  #绝对路径
-log_file_path = root_abspath.joinpath("log")
-masscan_path = root_abspath.joinpath("masscan")
 
+os_type = platform.system()
+
+masscan_path = root_abspath.joinpath("masscan")
+if os_type == 'Linux' or os_type == 'Darwin':
+    masscan = str(masscan_path.joinpath("masscan"))
+if os_type == 'Windows':
+    masscan = str(masscan_path.joinpath("masscan.exe"))
+
+
+log_file_path = root_abspath.joinpath("log")
 # log_level = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
 log_level = "INFO"
+log_file = str(log_file_path.joinpath("{}.log".format(time.strftime("%Y-%m-%d", time.localtime()))))
+
 
 nmap_min_hostgroup = 50
 nmap_min_parallelism = 100
