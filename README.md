@@ -16,6 +16,8 @@
 
   * async tcp 扫描存活主机端口
 
+  * nmap 扫描存活主机端口(-sS, 使用sudo)
+
   * masscan 扫描存活主机端口
 
 * 服务识别
@@ -30,19 +32,21 @@
 ### 参数
 ```
 ➜  python3 rpscan.py -h
-usage: rpscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-st {tcp,masscan}]
-                 [-t THREAD] [-r RATE] [-c] [-a] [-s]
+usage: rpscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-st {tcp,masscan,nmap}] 
+                 [-t THREAD] [-r RATE] [-p PORTS] [-c] [-a] [-s]
 
 optional arguments:
-  -h, --help           show this help message and exit
-  -i TARGET            Target(1.1.1.1 or 1.1.1.1/24 or 1.1.1.1-4)
-  -iL TARGET_FILENAME  Target file name
-  -st {tcp,masscan}    Port scan type, default is masscan
-  -t THREAD            The number of threads, default is 30 threads
-  -r RATE              Port scan rate, default is 1000
-  -c                   Check host is alive before port scan, default is False
-  -a                   Is full port scanning, default is False
-  -s                   Whether to get port service, default is False
+  -h, --help            show this help message and exit
+  -i TARGET             Target(1.1.1.1 or 1.1.1.1/24 or 1.1.1.1-4)
+  -iL TARGET_FILENAME   Target file name
+  -st {tcp,masscan,nmap}
+                        Port scan type, default is masscan
+  -t THREAD             The number of threads, default is 30 threads
+  -r RATE               Port scan rate, default is 1000
+  -p PORTS              Ports to be scanned, example: 22,23,80,3306
+  -c                    Check host is alive before port scan, default is False
+  -a                    Full port scan, default is False, scan common ports
+  -s                    Whether to get port service, default is False
 
 Examples:
   python3 rpscan.py -i 192.168.1.1/24 -c -s
@@ -51,16 +55,11 @@ Examples:
 
 ### 使用
 ```
-➜  python3 rpscan.py -i 59.108.123.123 -st tcp -c -s
-[16:15:34] [INFO] [*] Check Live Host...
-[16:15:34] [INFO] all host: 1, live host: 1
-[16:15:34] [INFO] [*] PortScan...
-[16:15:34] [INFO] start async tcp port scan...
-[16:15:34] [INFO] 59.108.123.123    22    open
-[16:15:34] [INFO] 59.108.123.123    80    open
-[16:15:39] [INFO] [*] Get the service of the port...
-[16:15:45] [INFO] 59.108.123.123    22    open    ssh     OpenSSH         6.6.1p1 Ubuntu2ubuntu2.11
-[16:15:45] [INFO] 59.108.123.123    80    open    http    Apache httpd    2.4.7
+➜  python3 rpscan.py -iL target.txt -st tcp -p22,80,3306,3389 -t 1 -s
+2020-06-17 00:34:56,891 [port scan] [*] Start async tcp port scan...
+2020-06-17 00:34:56,895 [port scan] 192.168.1.1      80     open
+2020-06-17 00:35:01,893 [port scan] [*] Get the service of the port...
+2020-06-17 00:35:08,127 [port scan] 192.168.1.1      80     open      http
 ```
 
 ### 引用
