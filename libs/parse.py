@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime : 2020-06-11 10:40:35
+@LastEditTime : 2020-06-15 01:15:23
 '''
 
 import argparse
@@ -12,27 +12,19 @@ import re
 import socket
 from IPy import IP
 
-try:
-    from libs.util import file_is_exist
-    from libs.mylog import MyLog
-    from config import log_level
-except ModuleNotFoundError:
-    from Rpscan.libs.util import file_is_exist
-    from Rpscan.libs.mylog import MyLog
-    from Rpscan.config import log_level
+from libs.util import file_is_exist
+from libs.data import config
 
-logger = MyLog(loglevel=log_level, logger_name="check parames")
-
-
-class Parser(object):
-    """Parser"""
+class ParserCmd(object):
+    """ParserCmd"""
 
     def __init__(self):
-        super(Parser, self).__init__()
+        super(ParserCmd, self).__init__()
         self.host = None
         self.host_file = None
         self.parser = self.my_parser()
         self.args = self.parser.parse_args().__dict__
+        self.logger = config.logger
 
     def my_parser(self):
         '''使用说明'''
@@ -52,16 +44,18 @@ class Parser(object):
         parser.add_argument("-iL", dest="target_filename", type=str,
                             help="Target file name")
         parser.add_argument("-st", dest="scantype", type=str, default="masscan",
-                            choices=["tcp", "masscan"], help="Port scan type, default is masscan")
+                            choices=["tcp", "masscan", "nmap"], help="Port scan type, default is masscan")
         parser.add_argument("-t", dest="thread", type=int, default=30,
                             help="The number of threads, default is 30 threads")
         parser.add_argument("-r", dest="rate", type=int, default=1000,
                             help="Port scan rate, default is 1000")
+        parser.add_argument("-p", dest="ports", type=str,
+                            help="Ports to be scanned, example: 22,23,80,3306")
         parser.add_argument("-c", dest="checklive", default=False, action="store_true",
                             help="Check host is alive before port scan, default is False")
-        parser.add_argument("-a", dest="is_all_ports", default=False, action="store_true",
-                            help="Is full port scanning, default is False")
-        parser.add_argument("-s", dest="service", default=False, action="store_true",
+        parser.add_argument("-a", dest="all_ports", default=False, action="store_true",
+                            help="Full port scan, default is False, scan common ports")
+        parser.add_argument("-s", dest="get_service", default=False, action="store_true",
                             help="Whether to get port service, default is False")
         # args = parser.parse_args()
         # parser.print_help()
@@ -70,7 +64,7 @@ class Parser(object):
 
     @staticmethod
     def init():
-        parser = Parser()
+        parser = ParserCmd()
         if parser.parames_is_right():
             return parser.args
         else:
@@ -86,7 +80,7 @@ class Parser(object):
 
         if not (self.host or self.host_file):
             self.parser.print_help()
-            logger.error(
+            self.logger.error(
                 "The arguments -i or -iL is required, please provide target !")
             exit(0)
 
@@ -97,7 +91,7 @@ class Parser(object):
 
     def check_file_exist(self, file_name):
         if not file_is_exist(file_name):
-            logger.error("No such file or directory \"{}\"".format(file_name))
+            self.logger.error("No such file or directory \"{}\"".format(file_name))
             return False
         else:
             return True
@@ -126,7 +120,10 @@ class ParseTarget(object):
         return ips
 
     def parse_ip(self, target):
-        # 10.17.1.1/24 or 10.17.2.30-55 or 10.111.22.12
+        # 1.1.1.1-1.1.1.10
+        # 10.17.1.1/24
+        # 10.17.2.30-55
+        # 10.111.22.12
 
         ip_list = list()
         # 校验target格式是否正确
@@ -141,12 +138,12 @@ class ParseTarget(object):
             start = target.rsplit('-', 1)[0].rsplit('.',1)[1]
             end   = target.rsplit('-', 1)[1].rsplit('.',1)[1]
             for x in range(int(start), int(end)+1):
-                ip_list.append(prev+"."+str(start))
+                ip_list.append(prev+"."+str(x))
         elif m1:
             tmp_ip_list = list()
             for x in IP(target, make_net=True):
                 tmp_ip_list.append(str(x))
-            ip_list = tmp_ip_list[1:-1]
+            ip_list = tmp_ip_list[1:]
         elif m2:
             prev = target.rsplit('.', 1)[0]
             st, sp = target.split('.')[-1].split('-')
