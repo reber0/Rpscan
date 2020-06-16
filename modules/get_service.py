@@ -4,16 +4,15 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime : 2020-06-16 13:18:01
+@LastEditTime : 2020-06-17 01:11:02
 '''
+
 import time
+import nmap
 from concurrent.futures import ThreadPoolExecutor
-# from threading import Lock
-from nmap import nmap
 
 from libs.data import config
 
-# lock = Lock()
 
 class NmapGetPortService(object):
     """获取端口运行的服务"""
@@ -53,9 +52,7 @@ class NmapGetPortService(object):
 
                     result = "{:<17}{:<7}{:<10}{:<16}{:<32}{}".format(
                         ip, port, state, name, product, version)
-                    # lock.acquire()
                     self.logger.info(result)
-                    # lock.release()
 
                     service_result = dict()
                     service_result['port'] = port
