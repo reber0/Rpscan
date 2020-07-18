@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-06-17 00:19:28
+@LastEditTime : 2020-07-19 02:36:46
 '''
 
 import os
@@ -34,8 +34,9 @@ class MasscanScan(object):
             f.write("\n".join(config.target_host))
 
         try:
+            ports = ",".join(config.ports)
             command = "{} -sS -v -Pn -n -p{} -iL {} -oJ {} --randomize-hosts --rate={}"
-            command = command.format(config.masscan, config.ports, target_file, result_file, config.rate)
+            command = command.format(config.masscan, ports, target_file, result_file, config.rate)
             self.logger.info(command)
             p = Popen(command, shell=True, stderr=STDOUT) # stdout=PIPE, 
             # print("状态：", p.poll())

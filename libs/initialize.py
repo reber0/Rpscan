@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-06-16 23:49:18
+@LastEditTime : 2020-07-19 02:52:10
 '''
 
 import importlib
@@ -44,13 +44,17 @@ def init_cmd_args():
     if config.ports:
         config.pop("common_port")
         config.pop("wooyun_top100_web_port")
-        if config.scantype == "tcp":
-            config.ports = sorted(config.ports.split(","))
+        config.ports = sorted(config.ports.split(","))
     elif config.all_ports:
+        config.pop("common_port")
+        config.pop("wooyun_top100_web_port")
         if config.scantype == "tcp":
             config.ports = [port for port in range(1, 65535)]
         else:
             config.ports = "1-65535"
     else:
         ports = list(set(config.wooyun_top100_web_port+config.common_port))
-        config.ports = ",".join([str(port) for port in ports])
+        config.pop("common_port")
+        config.pop("wooyun_top100_web_port")
+        ports = sorted(ports)
+        config.ports = map(lambda x:str(x), ports)
