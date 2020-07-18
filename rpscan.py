@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-23 09:52:13
-@LastEditTime : 2020-06-17 00:20:01
+@LastEditTime : 2020-07-19 02:59:44
 '''
 import sys
 sys.dont_write_bytecode = True  # 不生成pyc文件
@@ -28,7 +28,7 @@ def main():
     # 解析命令行参数
     init_cmd_args()
 
-    # 端口扫描
+    # 检测存活 ip
     if config.checklive:
         chl = CheckHostLive(ip_list=config.ip_list)
         config.target_host = chl.run()
@@ -36,7 +36,7 @@ def main():
         config.target_host = config.ip_list
     if len(config.target_host) < 1:
         exit()
-    
+
     # print(config.target_host)
     # exit()
 
