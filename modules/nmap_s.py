@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:42:43
-@LastEditTime : 2020-06-17 00:26:28
+@LastEditTime : 2020-07-19 02:55:27
 '''
 
 import nmap
@@ -28,14 +28,16 @@ class NmapScan(object):
         if len(config.target_host) < self.thread_num:
             self.thread_num = len(config.target_host)
 
-    def nmap_scan(self, ip):
+    def nmap_scan(self, ip, ports):
         '''nmap 端口探测'''
         if self.flag:
             try:
                 nm_scan = nmap.PortScanner()
-                args = "-sS -v -Pn -n -T4 -p{}".format(config.ports)
+                args = "-sS -v -Pn -n -T4 -p{}".format(ports)
+
+                self.logger.info("sudo nmap -oX - {} {} {}".format(args, ports, ip))
                 nm_scan.scan(ip, arguments=args)
-                self.logger.info(nm_scan.command_line())
+                # self.logger.info(nm_scan.command_line())
 
                 port_result = nm_scan[ip]['tcp']
                 for port in port_result.keys():
@@ -56,9 +58,10 @@ class NmapScan(object):
         self.logger.info("[*] Start nmap port scan...")
 
         try:
+            ports = ",".join(config.ports)
             with ThreadPoolExecutor(max_workers=self.thread_num) as executor:
                 for ip in config.target_host:
-                    executor.submit(self.nmap_scan, ip)
+                    executor.submit(self.nmap_scan, ip, ports)
         except KeyboardInterrupt:
             self.logger.error("User aborted.")
             self.flag = False
