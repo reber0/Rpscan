@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-07-19 02:52:10
+@LastEditTime : 2020-07-27 11:25:00
 '''
 
 import importlib
@@ -57,4 +57,4 @@ def init_cmd_args():
         config.pop("common_port")
         config.pop("wooyun_top100_web_port")
         ports = sorted(ports)
-        config.ports = map(lambda x:str(x), ports)
+        config.ports = list(map(str, ports))
