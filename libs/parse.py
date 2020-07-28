@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime : 2020-07-27 16:58:17
+@LastEditTime : 2020-07-28 10:03:06
 '''
 
 import argparse
@@ -40,6 +40,8 @@ class ParserCmd(object):
                             help="Target(1.1.1.1 or 1.1.1.1/24 or 1.1.1.1-4)")
         parser.add_argument("-iL", dest="target_filename", type=str,
                             help="Target file name")
+        parser.add_argument("-c", dest="config_file", type=str, default="config.cfg",
+                            help="Config file, example: /usr/local/etc/rpscan.cfg")
         parser.add_argument("-st", dest="scantype", type=str, default="masscan",
                             choices=["tcp", "masscan", "nmap"], help="Port scan type, default is masscan")
         parser.add_argument("-t", dest="thread", type=int, default=30,
@@ -54,8 +56,6 @@ class ParserCmd(object):
                             help="Full port scan, default is False, scan common ports")
         parser.add_argument("-s", dest="get_service", default=False, action="store_true",
                             help="Whether to get port service, default is False")
-        parser.add_argument("-c", dest="config_file", type=str, default="config.cfg",
-                            help="Config file, example: /usr/local/etc/rpscan.cfg")
         # args = parser.parse_args()
         # parser.print_help()
 
