@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:42:43
-@LastEditTime : 2020-07-19 02:55:27
+@LastEditTime : 2020-07-28 10:00:30
 '''
 
 import nmap
@@ -35,7 +35,7 @@ class NmapScan(object):
                 nm_scan = nmap.PortScanner()
                 args = "-sS -v -Pn -n -T4 -p{}".format(ports)
 
-                self.logger.info("sudo nmap -oX - {} {} {}".format(args, ports, ip))
+                self.logger.info("sudo nmap -oX - {} {}".format(args, ip))
                 nm_scan.scan(ip, arguments=args)
                 # self.logger.info(nm_scan.command_line())
 
@@ -47,15 +47,14 @@ class NmapScan(object):
                             self.open_list[ip].append(port)
                         else:
                             self.open_list[ip] = [port]
-                        self.logger.info(
-                            "{:<17}{:<7}{}".format(ip, port, state))
+                        self.logger.info("{:<17}{:<7}{}".format(ip, port, state))
             except Exception as e:
                 raise e
                 pass
 
     def run(self):
         '''Nmap port scan'''
-        self.logger.info("[*] Start nmap port scan...")
+        self.logger.debug("[*] Start nmap port scan...")
 
         try:
             ports = ",".join(config.ports)

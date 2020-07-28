@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:38:55
-@LastEditTime : 2020-06-15 01:11:46
+@LastEditTime : 2020-07-28 09:52:47
 '''
 
 import asyncio
@@ -25,7 +25,7 @@ class AsyncTcpScan(object):
             ip, port = ip_port
             conn = asyncio.open_connection(ip, port)
             try:
-                _, _ = await asyncio.wait_for(conn, timeout=5)
+                _, _ = await asyncio.wait_for(conn, timeout=config.timeout)
                 return (ip, port, 'open')
             except Exception as e:
                 return (ip, port, 'close')
@@ -50,7 +50,7 @@ class AsyncTcpScan(object):
 
     def run(self):
         '''async tcp port scan'''
-        self.logger.info("[*] Start async tcp port scan...")
+        self.logger.debug("[*] Start async tcp port scan...")
 
         ip_port_list = list()
         for ip in config.target_host:

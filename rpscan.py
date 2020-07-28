@@ -4,29 +4,30 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-23 09:52:13
-@LastEditTime : 2020-07-19 02:59:44
+@LastEditTime : 2020-07-28 09:32:22
 '''
 import sys
 sys.dont_write_bytecode = True  # 不生成pyc文件
 
-from libs.util import get_content
-from libs.initialize import init_config
-from libs.initialize import init_cmd_args
+import pathlib
 from libs.data import config
-
-from modules.check_live import CheckHostLive
-from modules.get_service import NmapGetPortService
-from modules.masscan_s import MasscanScan
-from modules.async_s import AsyncTcpScan
-from modules.nmap_s import NmapScan
+from libs.initialize import set_path
 
 
 def main():
-    # 引入配置文件中的配置
-    init_config("config.py")
+    # 设置路径
+    root_abspath = pathlib.Path(__file__).parent.resolve()  #绝对路径
+    set_path(root_abspath)
 
-    # 解析命令行参数
-    init_cmd_args()
+    # 初始化，主要是导入配置文件、解析命令行参数
+    from libs.initialize import init_options
+    init_options()
+
+    from modules.check_live import CheckHostLive
+    from modules.get_service import NmapGetPortService
+    from modules.masscan_s import MasscanScan
+    from modules.async_s import AsyncTcpScan
+    from modules.nmap_s import NmapScan
 
     # 检测存活 ip
     if config.checklive:
@@ -55,7 +56,6 @@ def main():
     if config.get_service and len(open_port_dict) > 0:
         ngps = NmapGetPortService(ip_port_dict=open_port_dict)
         port_service_list = ngps.run()
-
 
 
 
