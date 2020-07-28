@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-07-28 11:16:48
+@LastEditTime : 2020-07-28 11:21:13
 '''
 
 import os
@@ -36,6 +36,8 @@ class MasscanScan(object):
             f.write("\n".join(config.target_host))
 
         try:
+            if not config.all_ports:
+                config.ports = ",".join(config.ports)
             command = "{} -sS -v -Pn -n -p{} -iL {} -oJ {} --randomize-hosts --rate={}"
             command = command.format(config.masscan, config.ports, target_file, result_file, config.rate)
             self.logger.info(command)
