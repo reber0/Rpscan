@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime : 2020-06-15 01:15:23
+@LastEditTime : 2020-07-28 10:03:06
 '''
 
 import argparse
@@ -20,11 +20,8 @@ class ParserCmd(object):
 
     def __init__(self):
         super(ParserCmd, self).__init__()
-        self.host = None
-        self.host_file = None
         self.parser = self.my_parser()
         self.args = self.parser.parse_args().__dict__
-        self.logger = config.logger
 
     def my_parser(self):
         '''使用说明'''
@@ -43,6 +40,8 @@ class ParserCmd(object):
                             help="Target(1.1.1.1 or 1.1.1.1/24 or 1.1.1.1-4)")
         parser.add_argument("-iL", dest="target_filename", type=str,
                             help="Target file name")
+        parser.add_argument("-c", dest="config_file", type=str, default="config.cfg",
+                            help="Config file, example: /usr/local/etc/rpscan.cfg")
         parser.add_argument("-st", dest="scantype", type=str, default="masscan",
                             choices=["tcp", "masscan", "nmap"], help="Port scan type, default is masscan")
         parser.add_argument("-t", dest="thread", type=int, default=30,
@@ -51,7 +50,7 @@ class ParserCmd(object):
                             help="Port scan rate, default is 1000")
         parser.add_argument("-p", dest="ports", type=str,
                             help="Ports to be scanned, example: 22,23,80,3306")
-        parser.add_argument("-c", dest="checklive", default=False, action="store_true",
+        parser.add_argument("-ck", dest="checklive", default=False, action="store_true",
                             help="Check host is alive before port scan, default is False")
         parser.add_argument("-a", dest="all_ports", default=False, action="store_true",
                             help="Full port scan, default is False, scan common ports")
@@ -65,36 +64,7 @@ class ParserCmd(object):
     @staticmethod
     def init():
         parser = ParserCmd()
-        if parser.parames_is_right():
-            return parser.args
-        else:
-            exit()
-
-    def parames_is_right(self):
-        """
-        检测给的参数是否正常、检查目标文件或字典是否存在
-        """
-
-        self.host = self.args.get("target")
-        self.host_file = self.args.get("target_filename")
-
-        if not (self.host or self.host_file):
-            self.parser.print_help()
-            self.logger.error(
-                "The arguments -i or -iL is required, please provide target !")
-            exit(0)
-
-        if self.host_file:
-            return self.check_file_exist(self.host_file)
-
-        return True
-
-    def check_file_exist(self, file_name):
-        if not file_is_exist(file_name):
-            self.logger.error("No such file or directory \"{}\"".format(file_name))
-            return False
-        else:
-            return True
+        return parser.args
 
 
 class ParseTarget(object):
