@@ -4,13 +4,15 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-07-28 10:00:46
+@LastEditTime : 2020-07-28 11:16:48
 '''
 
 import os
-import demjson
+import time
+import json
 import tempfile
 from libs.data import config
+from libs.util import file_get_contents
 from subprocess import Popen, STDOUT, PIPE
 
 
@@ -53,13 +55,10 @@ class MasscanScan(object):
             exit(0)
         else:
             try:
-                lines = list()
-                with open(result_file, "r") as f_obj:
-                    for line in f_obj.readlines():
-                        lines.append(line.strip())
+                data = file_get_contents(result_file)
+                results = json.loads(data)
 
-                for line in lines[1::2]:
-                    result = demjson.decode(line)
+                for result in results:
                     ip = result.get("ip")
                     port = result.get("ports")[0].get("port")
                     status = result.get("ports")[0].get("status")
