@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-07-28 09:52:32
+@LastEditTime : 2020-07-29 15:20:55
 '''
 
 import sys
@@ -59,6 +59,17 @@ def parames_is_right():
 
 
 def init_options():
+    # 初始化日志
+    logger.remove()
+    logger_format1 = "[<green>{time:HH:mm:ss}</green>] <level>{message}</level>"
+    logger_format2 = "<green>{time:YYYY-MM-DD HH:mm:ss,SSS}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+    logger.add(sys.stdout, format=logger_format1, level="INFO")
+    logger.add(config.log_file_path, format=logger_format2, level="INFO", rotation="00:00", enqueue=True, encoding="utf-8")
+    logger.add(config.err_log_file_path, rotation="10 MB", level="ERROR", enqueue=True, encoding="utf-8")
+    config.pop("log_file_path")
+    config.pop("err_log_file_path")
+    config.logger = logger
+
     # 解析命令行参数
     args = ParserCmd().init()
     config.update(args)
@@ -75,17 +86,6 @@ def init_options():
             for k,v in cfg.items(section):
                 config[k] = v.strip()
         config.timeout = cfg.getint("base", "timeout")
-
-    # 初始化日志
-    logger.remove()
-    logger_format1 = "[<green>{time:HH:mm:ss}</green>] <level>{message}</level>"
-    logger_format2 = "<green>{time:YYYY-MM-DD HH:mm:ss,SSS}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
-    logger.add(sys.stdout, format=logger_format1, level="INFO")
-    logger.add(config.log_file_path, format=logger_format2, level="INFO", rotation="00:00", enqueue=True, encoding="utf-8")
-    logger.add(config.err_log_file_path, rotation="10 MB", level="ERROR", enqueue=True, encoding="utf-8")
-    config.pop("log_file_path")
-    config.pop("err_log_file_path")
-    config.logger = logger
 
     # 解析目标资产
     pt = ParseTarget()
