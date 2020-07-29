@@ -31,20 +31,22 @@
 
 ### 参数
 ```
-➜  python3 rpscan.py -h
-usage: rpscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-st {tcp,masscan,nmap}] 
-                 [-t THREAD] [-r RATE] [-p PORTS] [-c] [-a] [-s]
+➜  python3 rpscan.py -h                                              
+usage: rpscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-c CONFIG_FILE]
+                 [-st {tcp,masscan,nmap}] [-t THREAD] [-r RATE] [-p PORTS]
+                 [-ck] [-a] [-s]
 
 optional arguments:
   -h, --help            show this help message and exit
   -i TARGET             Target(1.1.1.1 or 1.1.1.1/24 or 1.1.1.1-4)
   -iL TARGET_FILENAME   Target file name
+  -c CONFIG_FILE        Config file, example: /usr/local/etc/rpscan.cfg
   -st {tcp,masscan,nmap}
                         Port scan type, default is masscan
   -t THREAD             The number of threads, default is 30 threads
   -r RATE               Port scan rate, default is 1000
   -p PORTS              Ports to be scanned, example: 22,23,80,3306
-  -c                    Check host is alive before port scan, default is False
+  -ck                   Check host is alive before port scan, default is False
   -a                    Full port scan, default is False, scan common ports
   -s                    Whether to get port service, default is False
 
