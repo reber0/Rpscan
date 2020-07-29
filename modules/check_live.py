@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime : 2020-06-14 18:38:53
+@LastEditTime : 2020-07-29 16:02:53
 '''
 
 import os
@@ -51,6 +51,7 @@ class CheckHostLive(object):
         except Exception as e:
             self.logger.error(str(e))
         finally:
+            os.close(tmpfd)
             os.remove(self.target_file)
 
         self.logger.info("All host: {}, live host: {}".format(len(self.ip_list), len(self.live_host)))

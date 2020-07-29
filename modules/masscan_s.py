@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-07-28 11:21:13
+@LastEditTime : 2020-07-29 16:04:03
 '''
 
 import os
@@ -73,6 +73,8 @@ class MasscanScan(object):
             except Exception as e:
                 self.logger.error(e)
             finally:
+                os.close(tmpfd1)
+                os.close(tmpfd2)
                 os.remove(target_file)
                 os.remove(result_file)
 
