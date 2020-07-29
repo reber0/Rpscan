@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime : 2020-07-28 10:03:06
+@LastEditTime : 2020-07-29 15:24:16
 '''
 
 import argparse
@@ -44,7 +44,7 @@ class ParserCmd(object):
                             help="Config file, example: /usr/local/etc/rpscan.cfg")
         parser.add_argument("-st", dest="scantype", type=str, default="masscan",
                             choices=["tcp", "masscan", "nmap"], help="Port scan type, default is masscan")
-        parser.add_argument("-t", dest="thread", type=int, default=30,
+        parser.add_argument("-t", dest="thread", type=int, default=10,
                             help="The number of threads, default is 30 threads")
         parser.add_argument("-r", dest="rate", type=int, default=1000,
                             help="Port scan rate, default is 1000")
