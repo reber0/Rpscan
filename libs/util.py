@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-31 13:03:24
-@LastEditTime : 2020-07-28 11:12:19
+@LastEditTime : 2020-07-29 15:37:03
 '''
 
 import pathlib
@@ -12,14 +12,14 @@ import pathlib
 
 def get_content(filename):
     """按行读取内容并组成列表"""
-    with open(filename) as f_obj:
+    with open(filename, 'r', encoding='utf-8') as f_obj:
         return [line.strip() for line in f_obj.readlines()]
 
 def file_get_contents(file_name):
     """读取文件内容返回字符串"""
     data = ""
     try:
-        f_obj = open(file_name, 'r')
+        f_obj = open(file_name, 'r', encoding='utf-8')
         data = f_obj.read()
     except Exception as e:
         return False
