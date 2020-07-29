@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-07-29 16:04:03
+@LastEditTime : 2020-07-29 16:59:56
 '''
 
 import os
@@ -70,6 +70,8 @@ class MasscanScan(object):
                         self.open_list[ip].append(port)
                     else:
                         self.open_list[ip] = [port]
+            except json.decoder.JSONDecodeError as e:
+                self.logger.error("json.decoder.JSONDecodeError: {}".format(e))
             except Exception as e:
                 self.logger.error(e)
             finally:
