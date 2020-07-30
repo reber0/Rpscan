@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-09-19 09:52:13
-@LastEditTime : 2020-07-29 15:24:16
+@LastEditTime : 2020-07-30 16:51:29
 '''
 
 import argparse
@@ -26,8 +26,8 @@ class ParserCmd(object):
     def my_parser(self):
         '''使用说明'''
         example = """Examples:
-                          \r  python3 {shell_name} -i 192.168.1.1/24 -c -s
-                          \r  python3 {shell_name} -iL target.txt -st masscan -r 3000 -c -a -s
+                          \r  python3 {shell_name} -i 192.168.1.1/24 -ck -s
+                          \r  python3 {shell_name} -iL target.txt -st masscan -r 3000 -ck -a -s
                           """
 
         parser = argparse.ArgumentParser(
