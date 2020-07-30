@@ -51,8 +51,8 @@ optional arguments:
   -s                    Whether to get port service, default is False
 
 Examples:
-  python3 rpscan.py -i 192.168.1.1/24 -c -s
-  python3 rpscan.py -iL target.txt -st masscan -r 3000 -c -a -s
+  python3 rpscan.py -i 192.168.1.1/24 -s -ck
+  python3 rpscan.py -iL target.txt -st masscan -r 3000 -a -s -ck
 ```
 
 ### 使用
