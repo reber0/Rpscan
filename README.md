@@ -24,10 +24,10 @@
 
 ### 安装必要模块
 * 安装 masscan [(Download)](https://github.com/robertdavidgraham/masscan)
+    * 自带的有 mac 和 win 下编译好的 masscan 1.0.4，其它平台不能用的自行编译安装
 
 * 安装 nmap [(Download)](https://nmap.org/dist/?C=M&O=D)
-
-* 如果是 win 的话安装 winpcap [(Download)](https://www.winpcap.org/install/default.htm)
+    * 如果是 win 的话安装 winpcap [(Download)](https://www.winpcap.org/install/default.htm)
 
 * pip3 install -r requirements.txt
 
