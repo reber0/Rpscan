@@ -4,11 +4,26 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-12-31 13:03:24
-@LastEditTime : 2020-07-29 15:37:03
+@LastEditTime : 2020-08-03 16:44:42
 '''
 
-import pathlib
+import os
+import platform
+from pathlib import Path
 
+
+def cmd_is_exist(command):
+    os_type = platform.system()
+    env_path = os.getenv("PATH")
+
+    if os_type == 'Linux' or os_type == 'Darwin':
+        for cmdpath in env_path.split(":"):
+            if os.path.isdir(cmdpath) and command in os.listdir(cmdpath):
+                return cmdpath+"/"+command
+    if os_type == 'Windows':
+        for cmdpath in env_path.split(";"):
+            if os.path.isdir(cmdpath) and command in os.listdir(cmdpath):
+                return cmdpath+"\\"+command
 
 def get_content(filename):
     """按行读取内容并组成列表"""
@@ -32,7 +47,7 @@ def file_get_contents(file_name):
 def file_is_exist(filepath):
     '''判断文件是否存在'''
     if filepath:
-        path = pathlib.Path(filepath)
+        path = Path(filepath)
         if path.is_file():
             return True
         else:
