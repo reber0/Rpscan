@@ -4,12 +4,12 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-07-29 16:59:56
+@LastEditTime : 2020-08-04 11:28:36
 '''
 
 import os
 import time
-import json
+import demjson
 import tempfile
 from libs.data import config
 from libs.util import file_get_contents
@@ -27,19 +27,20 @@ class MasscanScan(object):
     def masscan_scan(self):
         '''masscan 探测端口'''
 
-        tmpfd1, target_file = tempfile.mkstemp(
-            prefix='tmp_port_scan_target_', suffix='.txt', text=True)
-        tmpfd2, result_file = tempfile.mkstemp(
-            prefix='tmp_port_scan_result_', suffix='.txt', text=True)
+        target_file_fp = tempfile.NamedTemporaryFile(
+            prefix='tmp_port_scan_target_', suffix='.txt', delete=False)
+        result_file_fp = tempfile.NamedTemporaryFile(
+            prefix='tmp_port_scan_result_', suffix='.txt', delete=False)
 
-        with open(target_file, "w") as f:
-            f.write("\n".join(config.target_host))
+        target_file_fp.write("\n".join(config.target_host).encode("utf-8"))
+        target_file_fp.close()
+        result_file_fp.close()
 
         try:
             if not config.all_ports:
                 config.ports = ",".join(config.ports)
             command = "{} -sS -v -Pn -n -p{} -iL {} -oJ {} --randomize-hosts --rate={}"
-            command = command.format(config.masscan, config.ports, target_file, result_file, config.rate)
+            command = command.format(config.masscan, config.ports, target_file_fp.name, result_file_fp.name, config.rate)
             self.logger.info(command)
             p = Popen(command, shell=True, stderr=STDOUT) # stdout=PIPE, 
             # print("状态：", p.poll())
@@ -48,8 +49,8 @@ class MasscanScan(object):
             # time.sleep(90)
             masscan_output, masscan_err = p.communicate()
         except KeyboardInterrupt:
-            os.remove(target_file)
-            os.remove(result_file)
+            os.unlink(target_file_fp.name)
+            os.unlink(result_file_fp.name)
             time.sleep(11)
             os.remove("paused.conf")
             # os.killpg(os.getpgid(p.pid), 9)
@@ -57,10 +58,9 @@ class MasscanScan(object):
             exit(0)
         else:
             try:
-                data = file_get_contents(result_file)
-                results = json.loads(data)
+                data = file_get_contents(result_file_fp.name)
 
-                for result in results:
+                for result in demjson.decode(data):
                     ip = result.get("ip")
                     port = result.get("ports")[0].get("port")
                     status = result.get("ports")[0].get("status")
@@ -70,15 +70,16 @@ class MasscanScan(object):
                         self.open_list[ip].append(port)
                     else:
                         self.open_list[ip] = [port]
-            except json.decoder.JSONDecodeError as e:
-                self.logger.error("json.decoder.JSONDecodeError: {}".format(e))
+            except demjson.JSONDecodeError as e:
+                if str(e) == "No value to decode":
+                    self.logger.error("没有扫描到端口")
+                else:
+                    self.logger.error("demjson.JSONDecodeError: {}".format(e))
             except Exception as e:
                 self.logger.error(e)
             finally:
-                os.close(tmpfd1)
-                os.close(tmpfd2)
-                os.remove(target_file)
-                os.remove(result_file)
+                os.unlink(target_file_fp.name)
+                os.unlink(result_file_fp.name)
 
     def run(self):
         self.logger.debug("[*] Start masscan port scan...")
