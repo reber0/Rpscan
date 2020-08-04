@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-07-29 15:20:55
+@LastEditTime : 2020-08-04 11:30:28
 '''
 
 import sys
@@ -17,6 +17,7 @@ from configparser import ConfigParser
 
 from libs.util import get_content
 from libs.util import file_is_exist
+from libs.util import cmd_is_exist
 from libs.data import config
 from libs.parse import ParserCmd
 from libs.parse import ParseTarget
@@ -34,9 +35,15 @@ def set_path(root_abspath):
     config.os_type = os_type
     masscan_path = config.root_abspath.joinpath("masscan")
     if os_type == 'Linux' or os_type == 'Darwin':
-        masscan = str(masscan_path.joinpath("masscan"))
+        if cmd_is_exist("masscan"):
+            masscan = cmd_is_exist("masscan")
+        else:
+            masscan = str(masscan_path.joinpath("masscan"))
     if os_type == 'Windows':
-        masscan = str(masscan_path.joinpath("masscan.exe"))
+        if cmd_is_exist("masscan.exe"):
+            masscan = cmd_is_exist("masscan.exe")
+        else:
+            masscan = str(masscan_path.joinpath("masscan.exe"))
     config.masscan = masscan
 
 
