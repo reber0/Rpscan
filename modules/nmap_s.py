@@ -4,29 +4,29 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:42:43
-@LastEditTime : 2020-07-28 10:00:30
+@LastEditTime : 2020-08-05 09:28:12
 '''
 
 import nmap
 from concurrent.futures import ThreadPoolExecutor
-from libs.data import config
-
 
 class NmapScan(object):
     """端口扫描"""
 
-    def __init__(self):
+    def __init__(self, config):
         super(NmapScan, self).__init__()
         self.open_list = dict()
-        self.thread_num = config.thread
+        self.thread_num = config.thread_num
         self.logger = config.logger
+        self.target_host = config.target_host
+        self.ports = config.ports
         self.flag = True
         self.init_thread()
 
     def init_thread(self):
         '''设定线程数量'''
-        if len(config.target_host) < self.thread_num:
-            self.thread_num = len(config.target_host)
+        if len(self.target_host) < self.thread_num:
+            self.thread_num = len(self.target_host)
 
     def nmap_scan(self, ip, ports):
         '''nmap 端口探测'''
@@ -56,10 +56,10 @@ class NmapScan(object):
         '''Nmap port scan'''
         self.logger.debug("[*] Start nmap port scan...")
 
+        ports = ",".join(self.ports)
         try:
-            ports = ",".join(config.ports)
             with ThreadPoolExecutor(max_workers=self.thread_num) as executor:
-                for ip in config.target_host:
+                for ip in self.target_host:
                     executor.submit(self.nmap_scan, ip, ports)
         except KeyboardInterrupt:
             self.logger.error("User aborted.")
