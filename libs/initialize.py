@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-08-05 09:34:29
+@LastEditTime : 2020-08-05 11:08:45
 '''
 
 import sys
@@ -28,7 +28,7 @@ def set_path(root_abspath):
 
     # 设置日志路径
     config.log_file_path = root_abspath.joinpath("log/runtime_{time:YYYY-MM-DD}.log")
-    config.err_log_file_path = root_abspath.joinpath("log/err_{time:YYYY-MM-DD}.log")
+    config.err_log_file_path = root_abspath.joinpath("log/error.log")
 
     # 获取 masscan 路径
     config.masscan_file = get_masscan_file()

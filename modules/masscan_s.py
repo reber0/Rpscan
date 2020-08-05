@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-08-05 10:17:38
+@LastEditTime : 2020-08-05 11:10:52
 '''
 
 import os
@@ -55,7 +55,7 @@ class MasscanScan(object):
             os.unlink(target_file_fp.name)
             os.unlink(result_file_fp.name)
             time.sleep(11)
-            os.remove("paused.conf")
+            os.unlink("paused.conf")
             # os.killpg(os.getpgid(p.pid), 9)
             self.logger.error("User aborted.")
             exit(0)
