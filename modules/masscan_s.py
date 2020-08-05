@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-08-05 09:41:45
+@LastEditTime : 2020-08-05 10:17:38
 '''
 
 import os
@@ -22,6 +22,7 @@ class MasscanScan(object):
         super(MasscanScan, self).__init__()
         self.open_list = dict()
         self.logger = config.logger
+        self.os_type = config.os_type
         self.masscan_file = config.masscan_file
         self.target_host = config.target_host
         self.is_all_ports = config.is_all_ports
@@ -61,8 +62,13 @@ class MasscanScan(object):
         else:
             try:
                 data = file_get_contents(result_file_fp.name)
+                if self.os_type == "Windows":
+                    data = demjson.decode("["+data+"]")
+                    data.pop()
+                else:
+                    data = demjson.decode(data)
 
-                for result in demjson.decode(data):
+                for result in data:
                     ip = result.get("ip")
                     port = result.get("ports")[0].get("port")
                     status = result.get("ports")[0].get("status")
