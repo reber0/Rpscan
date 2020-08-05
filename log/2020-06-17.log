@@ -13,3 +13,4 @@
 2020-06-17 00:36:13,605 [port scan] [*] Get the service of the port...
 2020-06-17 00:36:20,135 [port scan] 192.168.1.1      80     open      http                                            
 2020-06-17 00:36:34,157 [port scan] The arguments -i or -iL is required, please provide target !
+2020-06-17 02:03:22,277 [port scan] The arguments -i or -iL is required, please provide target !
