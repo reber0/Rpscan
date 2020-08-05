@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-23 09:52:13
-@LastEditTime : 2020-07-28 09:32:22
+@LastEditTime : 2020-08-05 09:36:28
 '''
 import sys
 sys.dont_write_bytecode = True  # 不生成pyc文件
@@ -30,31 +30,28 @@ def main():
     from modules.nmap_s import NmapScan
 
     # 检测存活 ip
-    if config.checklive:
-        chl = CheckHostLive(ip_list=config.ip_list)
+    if config.is_check_live:
+        chl = CheckHostLive(config)
         config.target_host = chl.run()
     else:
         config.target_host = config.ip_list
     if len(config.target_host) < 1:
         exit()
 
-    # print(config.target_host)
-    # exit()
-
     # 端口扫描
     if config.scantype == "masscan":
-        m_scan = MasscanScan()
+        m_scan = MasscanScan(config)
         open_port_dict = m_scan.run()
     elif config.scantype == "nmap":
-        n_scan = NmapScan()
+        n_scan = NmapScan(config)
         open_port_dict = n_scan.run()
     elif config.scantype == "tcp":
-        a_scan = AsyncTcpScan()
+        a_scan = AsyncTcpScan(config)
         open_port_dict = a_scan.run()
 
     # 对扫描出来的端口进行服务识别
     if config.get_service and len(open_port_dict) > 0:
-        ngps = NmapGetPortService(ip_port_dict=open_port_dict)
+        ngps = NmapGetPortService(config=config, ip_port_dict=open_port_dict)
         port_service_list = ngps.run()
 
 
