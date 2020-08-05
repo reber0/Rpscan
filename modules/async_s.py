@@ -4,20 +4,23 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:38:55
-@LastEditTime : 2020-07-28 09:52:47
+@LastEditTime : 2020-08-04 16:40:17
 '''
 
 import asyncio
-from libs.data import config
-
 
 class AsyncTcpScan(object):
     """端口扫描"""
 
-    def __init__(self):
+    def __init__(self, config):
         super(AsyncTcpScan, self).__init__()
         self.open_list = dict()
         self.logger = config.logger
+        self.timeout = config.timeout
+        self.target_host = config.target_host
+        self.ports = config.ports
+        self.rate = config.rate
+        self.os_type = config.os_type
 
     async def async_port_check(self, semaphore, ip_port):
         '''端口探测'''
@@ -25,7 +28,7 @@ class AsyncTcpScan(object):
             ip, port = ip_port
             conn = asyncio.open_connection(ip, port)
             try:
-                _, _ = await asyncio.wait_for(conn, timeout=config.timeout)
+                _, _ = await asyncio.wait_for(conn, timeout=self.timeout)
                 return (ip, port, 'open')
             except Exception as e:
                 return (ip, port, 'close')
@@ -53,15 +56,15 @@ class AsyncTcpScan(object):
         self.logger.debug("[*] Start async tcp port scan...")
 
         ip_port_list = list()
-        for ip in config.target_host:
-            for port in config.ports:
+        for ip in self.target_host:
+            for port in self.ports:
                 ip_port_list.append((ip, int(port)))
 
         # print(ip_port_list)
 
-        if config.os_type == 'Windows':
-            config.rate = 500
-        sem = asyncio.Semaphore(config.rate)  # 限制并发量
+        if self.os_type == 'Windows':
+            self.rate = 500
+        sem = asyncio.Semaphore(self.rate)  # 限制并发量
         loop = asyncio.get_event_loop()
 
         tasks = list()

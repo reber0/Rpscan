@@ -4,27 +4,31 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-08-04 11:28:36
+@LastEditTime : 2020-08-05 09:41:45
 '''
 
 import os
 import time
 import demjson
 import tempfile
-from libs.data import config
-from libs.util import file_get_contents
 from subprocess import Popen, STDOUT, PIPE
 
+from libs.util import file_get_contents
 
 class MasscanScan(object):
     """端口扫描"""
 
-    def __init__(self):
+    def __init__(self, config):
         super(MasscanScan, self).__init__()
         self.open_list = dict()
         self.logger = config.logger
+        self.masscan_file = config.masscan_file
+        self.target_host = config.target_host
+        self.is_all_ports = config.is_all_ports
+        self.ports = config.ports
+        self.rate = config.rate
 
-    def masscan_scan(self):
+    def masscan_scan(self, target_host, ports, masscan_file, rate):
         '''masscan 探测端口'''
 
         target_file_fp = tempfile.NamedTemporaryFile(
@@ -32,15 +36,13 @@ class MasscanScan(object):
         result_file_fp = tempfile.NamedTemporaryFile(
             prefix='tmp_port_scan_result_', suffix='.txt', delete=False)
 
-        target_file_fp.write("\n".join(config.target_host).encode("utf-8"))
+        target_file_fp.write("\n".join(target_host).encode("utf-8"))
         target_file_fp.close()
         result_file_fp.close()
 
         try:
-            if not config.all_ports:
-                config.ports = ",".join(config.ports)
             command = "{} -sS -v -Pn -n -p{} -iL {} -oJ {} --randomize-hosts --rate={}"
-            command = command.format(config.masscan, config.ports, target_file_fp.name, result_file_fp.name, config.rate)
+            command = command.format(masscan_file, ports, target_file_fp.name, result_file_fp.name, rate)
             self.logger.info(command)
             p = Popen(command, shell=True, stderr=STDOUT) # stdout=PIPE, 
             # print("状态：", p.poll())
@@ -83,6 +85,9 @@ class MasscanScan(object):
 
     def run(self):
         self.logger.debug("[*] Start masscan port scan...")
-        self.masscan_scan()
+
+        if not self.is_all_ports:
+            self.ports = ",".join(self.ports)
+        self.masscan_scan(self.target_host, self.ports, self.masscan_file, self.rate)
 
         return self.open_list

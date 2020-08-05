@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime : 2020-06-17 01:11:02
+@LastEditTime : 2020-08-05 09:38:03
 '''
 
 import time
@@ -17,11 +17,11 @@ from libs.data import config
 class NmapGetPortService(object):
     """获取端口运行的服务"""
 
-    def __init__(self, ip_port_dict):
+    def __init__(self, config, ip_port_dict):
         super(NmapGetPortService, self).__init__()
-        self.ip_port_dict = ip_port_dict
-        self.thread_num = config.thread
         self.port_service_list = dict()
+        self.ip_port_dict = ip_port_dict
+        self.thread_num = config.thread_num
         self.logger = config.logger
         self.init_thread()
         self.flag = True
