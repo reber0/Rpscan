@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-08-05 10:09:46
+@LastEditTime : 2020-08-05 09:41:45
 '''
 
 import os
@@ -27,7 +27,6 @@ class MasscanScan(object):
         self.is_all_ports = config.is_all_ports
         self.ports = config.ports
         self.rate = config.rate
-        self.os_type = config.os_type
 
     def masscan_scan(self, target_host, ports, masscan_file, rate):
         '''masscan 探测端口'''
@@ -62,11 +61,8 @@ class MasscanScan(object):
         else:
             try:
                 data = file_get_contents(result_file_fp.name)
-                if self.os_type == "Windows":
-                    data = demjson.decode("["+data+"]")
-                    data.pop()
 
-                for result in data:
+                for result in demjson.decode(data):
                     ip = result.get("ip")
                     port = result.get("ports")[0].get("port")
                     status = result.get("ports")[0].get("status")
