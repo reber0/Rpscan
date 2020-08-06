@@ -1,3 +1,9 @@
+<!--
+ * @Author: reber
+ * @Mail: reber0ask@qq.com
+ * @Date: 2020-08-05 11:18:20
+ * @LastEditTime: 2020-08-06 11:01:10
+ -->
 # Rportscan
 
 [![platform](https://img.shields.io/static/v1?label=platform&message=macOS&color=172b43)](https://github.com/reber0/Rpscan/tree/master)
@@ -64,44 +70,4 @@ Examples:
 2020-06-17 00:34:56,895 [port scan] 192.168.1.1      80     open
 2020-06-17 00:35:01,893 [port scan] [*] Get the service of the port...
 2020-06-17 00:35:08,127 [port scan] 192.168.1.1      80     open      http
-```
-
-### 引用
-将源码放到 src 中，然后将 src 添加到 sys.path
-
-```
-[18:02 reber@wyb at ~/Downloads/tmp]
-➜  ls
-src     test.py
-[18:02 reber@wyb at ~/Downloads/tmp]
-➜  ls src
-Rpscan
-```
-
-test.py 内容: 
-
-```
-import sys
-import pathlib
-root_abspath = pathlib.Path(__file__).parent.resolve()
-module_path = root_abspath.joinpath("src")
-
-sys.path.append(str(module_path))
-
-from Rpscan import CheckHostLive
-chl = CheckHostLive(ip_list=["59.108.123.123"])
-live_host = chl.run()
-print(live_host)
-
-from Rpscan import PortScan
-ps = PortScan(ip_list=['59.108.123.123'], all_ports=False, rate=2000)
-port_open_dict = ps.masscan_scan()
-port_open_dict = ps.async_tcp_port_scan()
-print(port_open_dict)
-
-from pprint import pprint
-from Rpscan import NmapGetPortService
-ngps = NmapGetPortService(ip_port_dict={'59.108.123.123': [80, 22]}, thread_num=10)
-port_service_list = ngps.run()
-pprint.pprint(a)
 ```
