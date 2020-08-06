@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-08-05 11:08:45
+@LastEditTime : 2020-08-06 11:34:05
 '''
 
 import sys
@@ -74,13 +74,12 @@ def init_options():
         else:
             config.ports = "1-65535"
     else:
-        ports = json.loads(config.wooyun_top100_web_port)
-        ports += json.loads(config.common_port)
-        ports = list(set(ports))
+        common_port = map(int, config.common_port.split(","))
+        wooyun_top100_web_port = map(int, config.wooyun_top100_web_port.split(","))
+        ports = list(set(common_port+wooyun_top100_web_port))
         config.pop("common_port")
         config.pop("wooyun_top100_web_port")
-        ports = sorted(ports)
-        config.ports = list(map(str, ports))
+        config.ports = list(map(str, sorted(ports)))
 
 def get_masscan_file():
     os_type = platform.system()
