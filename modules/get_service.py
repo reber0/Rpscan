@@ -4,14 +4,12 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime : 2020-08-05 09:38:03
+@LastEditTime : 2020-08-06 10:55:16
 '''
 
 import time
 import nmap
 from concurrent.futures import ThreadPoolExecutor
-
-from libs.data import config
 
 
 class NmapGetPortService(object):
