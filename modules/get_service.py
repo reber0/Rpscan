@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime : 2020-08-06 10:55:16
+@LastEditTime : 2020-08-07 16:48:34
 '''
 
 import time
@@ -21,6 +21,7 @@ class NmapGetPortService(object):
         self.ip_port_dict = ip_port_dict
         self.thread_num = config.thread_num
         self.logger = config.logger
+        self.is_all_ports = config.is_all_ports
         self.init_thread()
         self.flag = True
 
@@ -33,6 +34,13 @@ class NmapGetPortService(object):
         '''nmap 获取端口的 service'''
         if self.flag:
             ip, port = ip_port
+            if self.is_all_ports and len(port.split(","))>20000:
+                self.logger.error("{} 全端口开放 {} 个, 可能有拦截设备, 跳过服务扫描".format(ip, len(port.split(","))))
+                return
+            if not self.is_all_ports and len(port)>190:
+                self.logger.error("{} 常用端口开放 {} 个, 可能有拦截设备, 跳过服务扫描".format(ip, len(port.split(","))))
+                return
+
             try:
                 nm_scan = nmap.PortScanner()
                 args = '-p T:'+str(port)+' -Pn -sT -sV -n'
@@ -60,6 +68,7 @@ class NmapGetPortService(object):
                     service_result['version'] = version
                     self.port_service_list[ip].append(service_result)
             except Exception as e:
+                self.logger.error(ip, args)
                 self.logger.error(e)
                 pass
 

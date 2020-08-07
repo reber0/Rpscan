@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-08-06 11:34:05
+@LastEditTime : 2020-08-07 14:15:42
 '''
 
 import sys
@@ -27,7 +27,8 @@ def set_path(root_abspath):
     config.root_abspath = root_abspath
 
     # 设置日志路径
-    config.log_file_path = root_abspath.joinpath("log/runtime_{time:YYYY-MM-DD}.log")
+    # config.log_file_path = root_abspath.joinpath("log/runtime_{time:YYYY-MM-DD}.log")
+    config.log_file_path = root_abspath.joinpath("log/result.log")
     config.err_log_file_path = root_abspath.joinpath("log/error.log")
 
     # 获取 masscan 路径
@@ -74,9 +75,8 @@ def init_options():
         else:
             config.ports = "1-65535"
     else:
-        common_port = map(int, config.common_port.split(","))
-        wooyun_top100_web_port = map(int, config.wooyun_top100_web_port.split(","))
-        ports = list(set(common_port+wooyun_top100_web_port))
+        ports = map(int, config.common_port.split(",")+config.wooyun_top100_web_port.split(","))
+        ports = list(set(list(sorted(ports))))
         config.pop("common_port")
         config.pop("wooyun_top100_web_port")
         config.ports = list(map(str, sorted(ports)))
@@ -120,8 +120,9 @@ def set_logger():
     logger_format1 = "[<green>{time:HH:mm:ss}</green>] <level>{message}</level>"
     logger_format2 = "<green>{time:YYYY-MM-DD HH:mm:ss,SSS}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
     logger.add(sys.stdout, format=logger_format1, level="INFO")
-    logger.add(config.log_file_path, format=logger_format2, level="INFO", rotation="00:00", enqueue=True, encoding="utf-8")
-    logger.add(config.err_log_file_path, rotation="10 MB", level="ERROR", enqueue=True, encoding="utf-8")
+    logger.add(config.log_file_path, format=logger_format2, level="INFO", rotation="10 MB", enqueue=True, encoding="utf-8", errors="ignore")
+    # logger.add(config.log_file_path, format=logger_format2, level="INFO", rotation="00:00", enqueue=True, encoding="utf-8", errors="ignore")
+    logger.add(config.err_log_file_path, rotation="10 MB", level="ERROR", enqueue=True, encoding="utf-8", errors="ignore")
     config.pop("log_file_path")
     config.pop("err_log_file_path")
     config.logger = logger
