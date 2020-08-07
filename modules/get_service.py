@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime : 2020-08-07 20:02:40
+@LastEditTime : 2020-08-07 20:05:09
 '''
 
 import time
@@ -40,7 +40,6 @@ class NmapGetPortService(object):
             if not self.is_all_ports and len(port)>190:
                 self.logger.error("{} 常用端口开放 {} 个, 可能有拦截设备, 跳过端口服务识别.".format(ip, len(port.split(","))))
                 return
-
             try:
                 nm_scan = nmap.PortScanner()
                 args = '-p T:'+str(port)+' -Pn -sT -sV -n'
