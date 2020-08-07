@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-08-06 15:37:27
+@LastEditTime : 2020-08-07 14:15:42
 '''
 
 import sys
@@ -75,9 +75,8 @@ def init_options():
         else:
             config.ports = "1-65535"
     else:
-        common_port = map(int, config.common_port.split(","))
-        wooyun_top100_web_port = map(int, config.wooyun_top100_web_port.split(","))
-        ports = list(set(common_port+wooyun_top100_web_port))
+        ports = map(int, config.common_port.split(",")+config.wooyun_top100_web_port.split(","))
+        ports = list(set(list(sorted(ports))))
         config.pop("common_port")
         config.pop("wooyun_top100_web_port")
         config.ports = list(map(str, sorted(ports)))

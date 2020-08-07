@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:38:55
-@LastEditTime : 2020-08-04 16:40:17
+@LastEditTime : 2020-08-07 12:04:35
 '''
 
 import asyncio
@@ -17,7 +17,7 @@ class AsyncTcpScan(object):
         self.open_list = dict()
         self.logger = config.logger
         self.timeout = config.timeout
-        self.target_host = config.target_host
+        self.ip_list = config.ip_list
         self.ports = config.ports
         self.rate = config.rate
         self.os_type = config.os_type
@@ -56,7 +56,7 @@ class AsyncTcpScan(object):
         self.logger.debug("[*] Start async tcp port scan...")
 
         ip_port_list = list()
-        for ip in self.target_host:
+        for ip in self.ip_list:
             for port in self.ports:
                 ip_port_list.append((ip, int(port)))
 
