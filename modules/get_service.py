@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-08-24 17:55:54
-@LastEditTime : 2020-08-07 16:48:34
+@LastEditTime : 2020-08-07 20:02:40
 '''
 
 import time
@@ -35,10 +35,10 @@ class NmapGetPortService(object):
         if self.flag:
             ip, port = ip_port
             if self.is_all_ports and len(port.split(","))>20000:
-                self.logger.error("{} 全端口开放 {} 个, 可能有拦截设备, 跳过服务扫描".format(ip, len(port.split(","))))
+                self.logger.error("{} 全端口开放 {} 个, 可能有拦截设备, 跳过端口服务识别.".format(ip, len(port.split(","))))
                 return
             if not self.is_all_ports and len(port)>190:
-                self.logger.error("{} 常用端口开放 {} 个, 可能有拦截设备, 跳过服务扫描".format(ip, len(port.split(","))))
+                self.logger.error("{} 常用端口开放 {} 个, 可能有拦截设备, 跳过端口服务识别.".format(ip, len(port.split(","))))
                 return
 
             try:
