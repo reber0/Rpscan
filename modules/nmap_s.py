@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:42:43
-@LastEditTime : 2020-08-07 12:03:59
+@LastEditTime : 2020-08-07 15:16:29
 '''
 
 import nmap
@@ -20,6 +20,7 @@ class NmapScan(object):
         self.logger = config.logger
         self.ip_list = config.ip_list
         self.ports = config.ports
+        self.is_all_ports = config.is_all_ports
         self.flag = True
         self.init_thread()
 
@@ -56,11 +57,12 @@ class NmapScan(object):
         '''Nmap port scan'''
         self.logger.debug("[*] Start nmap port scan...")
 
-        ports = ",".join(self.ports)
+        if not self.is_all_ports:
+            self.ports = ",".join(self.ports)
         try:
             with ThreadPoolExecutor(max_workers=self.thread_num) as executor:
                 for ip in self.ip_list:
-                    executor.submit(self.nmap_scan, ip, ports)
+                    executor.submit(self.nmap_scan, ip, self.ports)
         except KeyboardInterrupt:
             self.logger.error("User aborted.")
             self.flag = False
