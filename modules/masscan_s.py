@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-11 16:41:42
-@LastEditTime : 2020-08-05 11:10:52
+@LastEditTime : 2020-08-07 14:37:20
 '''
 
 import os
@@ -24,12 +24,12 @@ class MasscanScan(object):
         self.logger = config.logger
         self.os_type = config.os_type
         self.masscan_file = config.masscan_file
-        self.target_host = config.target_host
+        self.ip_list = config.ip_list
         self.is_all_ports = config.is_all_ports
         self.ports = config.ports
         self.rate = config.rate
 
-    def masscan_scan(self, target_host, ports, masscan_file, rate):
+    def masscan_scan(self, ip_list, ports, masscan_file, rate):
         '''masscan 探测端口'''
 
         target_file_fp = tempfile.NamedTemporaryFile(
@@ -37,12 +37,12 @@ class MasscanScan(object):
         result_file_fp = tempfile.NamedTemporaryFile(
             prefix='tmp_port_scan_result_', suffix='.txt', delete=False)
 
-        target_file_fp.write("\n".join(target_host).encode("utf-8"))
+        target_file_fp.write("\n".join(ip_list).encode("utf-8"))
         target_file_fp.close()
         result_file_fp.close()
 
         try:
-            command = "{} -sS -v -Pn -n -p{} -iL {} -oJ {} --randomize-hosts --rate={}"
+            command = "{} -sS -Pn -n -p{} -iL {} -oJ {} --randomize-hosts --rate={}"
             command = command.format(masscan_file, ports, target_file_fp.name, result_file_fp.name, rate)
             self.logger.info(command)
             p = Popen(command, shell=True, stderr=STDOUT) # stdout=PIPE, 
@@ -94,6 +94,6 @@ class MasscanScan(object):
 
         if not self.is_all_ports:
             self.ports = ",".join(self.ports)
-        self.masscan_scan(self.target_host, self.ports, self.masscan_file, self.rate)
+        self.masscan_scan(self.ip_list, self.ports, self.masscan_file, self.rate)
 
         return self.open_list
