@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2019-05-23 09:52:13
-@LastEditTime : 2020-08-07 12:02:01
+@LastEditTime : 2020-08-10 10:44:40
 '''
 import sys
 sys.dont_write_bytecode = True  # 不生成pyc文件
@@ -28,6 +28,7 @@ def main():
     from modules.masscan_s import MasscanScan
     from modules.async_s import AsyncTcpScan
     from modules.nmap_s import NmapScan
+    from modules.http_s import HttpScan
 
     # 检测存活 ip
     if config.is_check_live:
@@ -46,6 +47,9 @@ def main():
     elif config.scantype == "tcp":
         a_scan = AsyncTcpScan(config)
         open_port_dict = a_scan.run()
+    elif config.scantype == "http":
+        h_scan = HttpScan(config)
+        open_port_dict = h_scan.run()
 
     # 对扫描出来的端口进行服务识别
     if config.get_service and len(open_port_dict) > 0:

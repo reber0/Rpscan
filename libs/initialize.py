@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-08-07 14:15:42
+@LastEditTime : 2020-08-10 11:01:47
 '''
 
 import sys
@@ -64,21 +64,24 @@ def init_options():
 
     # 解析扫描的端口
     if config.ports:
-        config.pop("common_port")
-        config.pop("wooyun_top100_web_port")
+        # config.pop("common_port")
+        # config.pop("wooyun_top100_web_port")
         config.ports = sorted(config.ports.split(","))
     elif config.is_all_ports:
-        config.pop("common_port")
-        config.pop("wooyun_top100_web_port")
+        # config.pop("common_port")
+        # config.pop("wooyun_top100_web_port")
         if config.scantype == "tcp":
             config.ports = [port for port in range(1, 65535)]
         else:
             config.ports = "1-65535"
+    elif config.scantype == "http":
+        ports = map(int, config.wooyun_top100_web_port.split(","))
+        config.ports = list(map(str, list(sorted(ports))))
     else:
         ports = map(int, config.common_port.split(",")+config.wooyun_top100_web_port.split(","))
         ports = list(set(list(sorted(ports))))
-        config.pop("common_port")
-        config.pop("wooyun_top100_web_port")
+        # config.pop("common_port")
+        # config.pop("wooyun_top100_web_port")
         config.ports = list(map(str, sorted(ports)))
 
 def get_masscan_file():

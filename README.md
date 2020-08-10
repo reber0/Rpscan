@@ -2,7 +2,7 @@
  * @Author: reber
  * @Mail: reber0ask@qq.com
  * @Date: 2020-08-05 11:18:20
- * @LastEditTime: 2020-08-06 11:01:10
+ * @LastEditTime : 2020-08-10 10:49:44
  -->
 # Rportscan
 
@@ -26,6 +26,8 @@
 
   * masscan 扫描存活主机端口
 
+  * http 探测常见的 web 端口
+
 * 服务识别
 
 ### 安装必要模块
@@ -41,7 +43,7 @@
 ```
 ➜  python3 rpscan.py -h                                              
 usage: rpscan.py [-h] [-i TARGET] [-iL TARGET_FILENAME] [-c CONFIG_FILE]
-                 [-st {tcp,masscan,nmap}] [-t THREAD] [-r RATE] [-p PORTS]
+                 [-st {tcp,masscan,nmap,http}] [-t THREAD] [-r RATE] [-p PORTS]
                  [-ck] [-a] [-s]
 
 optional arguments:
@@ -49,7 +51,7 @@ optional arguments:
   -i TARGET             Target(1.1.1.1 or 1.1.1.1/24 or 1.1.1.1-4)
   -iL TARGET_FILENAME   Target file name
   -c CONFIG_FILE        Config file, example: /usr/local/etc/rpscan.cfg
-  -st {tcp,masscan,nmap}
+  -st {tcp,masscan,nmap,http}
                         Port scan type, default is masscan
   -t THREAD             The number of threads, default is 30 threads
   -r RATE               Port scan rate, default is 1000
