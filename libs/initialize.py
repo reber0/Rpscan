@@ -4,7 +4,7 @@
 @Author: reber
 @Mail: reber0ask@qq.com
 @Date: 2020-06-12 13:52:55
-@LastEditTime : 2020-08-10 11:01:47
+@LastEditTime : 2020-08-11 11:23:56
 '''
 
 import sys
@@ -34,25 +34,43 @@ def set_path(root_abspath):
     # 获取 masscan 路径
     config.masscan_file = get_masscan_file()
 
+def get_masscan_file():
+    os_type = platform.system()
+    config.os_type = os_type
+    masscan_path = config.root_abspath.joinpath("masscan")
+    if os_type == 'Linux' or os_type == 'Darwin':
+        if cmd_is_exist("masscan"):
+            masscan_file = cmd_is_exist("masscan")
+        else:
+            masscan_file = str(masscan_path.joinpath("masscan"))
+    if os_type == 'Windows':
+        if cmd_is_exist("masscan.exe"):
+            masscan_file = cmd_is_exist("masscan.exe")
+        else:
+            masscan_file = str(masscan_path.joinpath("masscan.exe"))
+    return masscan_file
+
 def init_options():
     set_logger()
 
     # 解析命令行参数
     args = ParserCmd().init()
-    config.update(args)
-    parames_is_right()
+    config_file = args.get("config_file")
 
     # 解析配置文件参数
-    if not file_is_exist(config.config_file):
-        config.logger.error("No such file or directory \"{}\"".format(config.config_file))
+    if not file_is_exist(config_file):
+        config.logger.error("No such file or directory \"{}\"".format(config_file))
         exit(0)
     else:
         cfg = ConfigParser()
-        cfg.read(config.config_file)
+        cfg.read(config_file)
         for section in cfg.sections():
             for k,v in cfg.items(section):
                 config[k] = v.strip()
         config.timeout = cfg.getint("base", "timeout")
+
+    config.update(args)
+    parames_is_right()
 
     # 解析目标资产
     pt = ParseTarget()
@@ -83,22 +101,6 @@ def init_options():
         # config.pop("common_port")
         # config.pop("wooyun_top100_web_port")
         config.ports = list(map(str, sorted(ports)))
-
-def get_masscan_file():
-    os_type = platform.system()
-    config.os_type = os_type
-    masscan_path = config.root_abspath.joinpath("masscan")
-    if os_type == 'Linux' or os_type == 'Darwin':
-        if cmd_is_exist("masscan"):
-            masscan_file = cmd_is_exist("masscan")
-        else:
-            masscan_file = str(masscan_path.joinpath("masscan"))
-    if os_type == 'Windows':
-        if cmd_is_exist("masscan.exe"):
-            masscan_file = cmd_is_exist("masscan.exe")
-        else:
-            masscan_file = str(masscan_path.joinpath("masscan.exe"))
-    return masscan_file
 
 def parames_is_right():
     """
